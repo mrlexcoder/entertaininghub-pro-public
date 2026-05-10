@@ -17,27 +17,49 @@ Your **EntertainingHub Pro** backend is ready! This is a professional-grade ente
 
 ---
 
-## 🚀 Quick Start (3 Steps)
+## 🚀 Quick Start (ONE COMMAND!)
 
-### Step 1: Navigate to Project
-```bash
+### 🎯 Easiest Way - Automated Script
+
+**Windows:**
+```cmd
 cd entertainingzen
+start-all.bat
 ```
 
-### Step 2: Start with Docker (Easiest)
+**Linux/Mac/Git Bash:**
 ```bash
+cd entertainingzen
+./start-all.sh
+```
+
+**That's it!** The script will:
+- ✅ Check prerequisites
+- ✅ Install dependencies
+- ✅ Start Backend (port 8080)
+- ✅ Start Frontend (port 3000)
+- ✅ Start Admin Panel (port 3001)
+- ✅ Open browser automatically
+
+### Alternative: Docker
+```bash
+cd entertainingzen
 docker-compose up -d
 ```
 
-**OR** Start Manually:
+### Alternative: Manual
 ```bash
-cd backend
-cp .env.example .env
-# Edit .env with your database credentials
-make dev
+# Terminal 1 - Backend
+cd backend && make dev
+
+# Terminal 2 - Frontend
+cd frontend && npm install && npm run dev
+
+# Terminal 3 - Admin
+cd admin-panel && npm install && npm run dev
 ```
 
-### Step 3: Test It!
+### Test It!
 ```bash
 curl http://localhost:8080/api/health
 ```
