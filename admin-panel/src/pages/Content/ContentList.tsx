@@ -13,28 +13,27 @@ interface Content {
   views_count: number;
   is_published: boolean;
   release_year: number;
-  created_at: string;
 }
 
-const TYPE_COLORS: Record<string, string> = {
-  movie:       'bg-blue-900/40 text-blue-400',
-  series:      'bg-purple-900/40 text-purple-400',
-  anime:       'bg-pink-900/40 text-pink-400',
-  documentary: 'bg-yellow-900/40 text-yellow-400',
-  gaming:      'bg-green-900/40 text-green-400',
-  '18plus':    'bg-red-900/40 text-red-400',
+const TYPE_BADGE: Record<string, string> = {
+  movie:       'bg-blue-100 text-blue-700',
+  series:      'bg-violet-100 text-violet-700',
+  anime:       'bg-pink-100 text-pink-700',
+  documentary: 'bg-amber-100 text-amber-700',
+  gaming:      'bg-emerald-100 text-emerald-700',
+  '18plus':    'bg-red-100 text-red-700',
 };
 
 export default function ContentList() {
   const token = useAppSelector((s) => s.auth.token);
-  const [items, setItems] = useState<Content[]>([]);
+  const [items, setItems]   = useState<Content[]>([]);
   const [loading, setLoading] = useState(true);
-  const [search, setSearch] = useState('');
+  const [search, setSearch]   = useState('');
 
   const fetchContent = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`${API}/content?page=1&page_size=50`, {
+      const res  = await fetch(`${API}/content?page=1&page_size=50`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await res.json();
@@ -68,14 +67,16 @@ export default function ContentList() {
 
   return (
     <div className="space-y-5">
+
+      {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-white">Content</h1>
-          <p className="text-gray-400 text-sm mt-1">{items.length} items total</p>
+          <h1 className="text-2xl font-bold text-slate-900">Content</h1>
+          <p className="text-slate-500 text-sm mt-0.5">{items.length} items total</p>
         </div>
         <Link
           to="/content/new"
-          className="px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-lg text-sm font-medium transition"
+          className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-sm font-medium transition shadow-sm"
         >
           ➕ Add Content
         </Link>
@@ -84,52 +85,76 @@ export default function ContentList() {
       {/* Search */}
       <input
         type="search"
-        placeholder="Search content..."
+        placeholder="Search content…"
         value={search}
         onChange={(e) => setSearch(e.target.value)}
-        className="w-full max-w-sm px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary-500"
+        className="w-full max-w-sm px-4 py-2 bg-white border border-slate-300 rounded-lg text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"
       />
 
       {/* Table */}
-      <div className="bg-gray-800 rounded-xl border border-gray-700 overflow-hidden">
+      <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
         <table className="w-full text-sm">
-          <thead>
-            <tr className="border-b border-gray-700 text-gray-400 text-xs uppercase tracking-wider">
-              <th className="px-5 py-4 text-left">Title</th>
-              <th className="px-5 py-4 text-left">Type</th>
-              <th className="px-5 py-4 text-left">Year</th>
-              <th className="px-5 py-4 text-left">Rating</th>
-              <th className="px-5 py-4 text-left">Views</th>
-              <th className="px-5 py-4 text-left">Status</th>
-              <th className="px-5 py-4 text-left">Actions</th>
+          <thead className="bg-slate-50 border-b border-slate-200">
+            <tr className="text-slate-500 text-xs uppercase tracking-wider">
+              <th className="px-5 py-3.5 text-left font-semibold">Title</th>
+              <th className="px-5 py-3.5 text-left font-semibold">Type</th>
+              <th className="px-5 py-3.5 text-left font-semibold">Year</th>
+              <th className="px-5 py-3.5 text-left font-semibold">Rating</th>
+              <th className="px-5 py-3.5 text-left font-semibold">Views</th>
+              <th className="px-5 py-3.5 text-left font-semibold">Status</th>
+              <th className="px-5 py-3.5 text-left font-semibold">Actions</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-700">
+          <tbody className="divide-y divide-slate-100">
             {loading ? (
-              <tr><td colSpan={7} className="px-5 py-10 text-center text-gray-500">Loading...</td></tr>
+              <tr>
+                <td colSpan={7} className="px-5 py-12 text-center text-slate-400">
+                  <div className="flex items-center justify-center gap-2">
+                    <div className="w-4 h-4 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin" />
+                    Loading…
+                  </div>
+                </td>
+              </tr>
             ) : filtered.length === 0 ? (
-              <tr><td colSpan={7} className="px-5 py-10 text-center text-gray-500">No content yet. <Link to="/content/new" className="text-primary-400 hover:underline">Add some →</Link></td></tr>
+              <tr>
+                <td colSpan={7} className="px-5 py-12 text-center text-slate-400">
+                  No content yet.{' '}
+                  <Link to="/content/new" className="text-indigo-600 hover:underline font-medium">
+                    Add some →
+                  </Link>
+                </td>
+              </tr>
             ) : (
               filtered.map((item) => (
-                <tr key={item.id} className="hover:bg-gray-750 transition">
-                  <td className="px-5 py-4 text-white font-medium">{item.title}</td>
+                <tr key={item.id} className="hover:bg-slate-50 transition-colors">
+                  <td className="px-5 py-4 text-slate-900 font-medium">{item.title}</td>
                   <td className="px-5 py-4">
-                    <span className={`px-2 py-1 rounded text-xs font-medium ${TYPE_COLORS[item.content_type] ?? 'bg-gray-700 text-gray-300'}`}>
+                    <span className={`px-2.5 py-1 rounded-full text-xs font-semibold ${TYPE_BADGE[item.content_type] ?? 'bg-slate-100 text-slate-600'}`}>
                       {item.content_type}
                     </span>
                   </td>
-                  <td className="px-5 py-4 text-gray-400">{item.release_year || '—'}</td>
-                  <td className="px-5 py-4 text-yellow-400">{item.imdb_rating ? `⭐ ${item.imdb_rating}` : '—'}</td>
-                  <td className="px-5 py-4 text-gray-400">{item.views_count.toLocaleString()}</td>
+                  <td className="px-5 py-4 text-slate-500">{item.release_year || '—'}</td>
+                  <td className="px-5 py-4 text-amber-600 font-medium">
+                    {item.imdb_rating ? `⭐ ${item.imdb_rating}` : '—'}
+                  </td>
+                  <td className="px-5 py-4 text-slate-500">{item.views_count.toLocaleString()}</td>
                   <td className="px-5 py-4">
-                    <span className={`px-2 py-1 rounded text-xs font-medium ${item.is_published ? 'bg-green-900/40 text-green-400' : 'bg-gray-700 text-gray-400'}`}>
+                    <span className={`px-2.5 py-1 rounded-full text-xs font-semibold ${
+                      item.is_published
+                        ? 'bg-emerald-100 text-emerald-700'
+                        : 'bg-slate-100 text-slate-500'
+                    }`}>
                       {item.is_published ? 'Published' : 'Draft'}
                     </span>
                   </td>
                   <td className="px-5 py-4">
-                    <div className="flex items-center gap-2">
-                      <Link to={`/content/edit/${item.id}`} className="text-primary-400 hover:text-primary-300 text-xs">Edit</Link>
-                      <button onClick={() => handleDelete(item.id)} className="text-red-400 hover:text-red-300 text-xs">Delete</button>
+                    <div className="flex items-center gap-3">
+                      <Link to={`/content/edit/${item.id}`} className="text-indigo-600 hover:text-indigo-800 text-xs font-medium">
+                        Edit
+                      </Link>
+                      <button onClick={() => handleDelete(item.id)} className="text-red-500 hover:text-red-700 text-xs font-medium">
+                        Delete
+                      </button>
                     </div>
                   </td>
                 </tr>
