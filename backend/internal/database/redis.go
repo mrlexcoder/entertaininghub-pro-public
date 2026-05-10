@@ -1,7 +1,6 @@
 package database
 
 import (
-	"context"
 	"fmt"
 	"log"
 
@@ -16,12 +15,6 @@ func InitRedis(cfg *config.Config) *redis.Client {
 		DB:       cfg.RedisDB,
 	})
 
-	// Test connection
-	ctx := context.Background()
-	if err := client.Ping(ctx).Err(); err != nil {
-		log.Fatalf("Failed to connect to Redis: %v", err)
-	}
-
-	log.Println("✅ Redis connected successfully")
+	log.Println("✅ Redis client created")
 	return client
 }

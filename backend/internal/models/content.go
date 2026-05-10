@@ -43,7 +43,7 @@ type Content struct {
 	TrailerURL      string          `json:"trailer_url"`
 	MaturityRating  MaturityRating  `gorm:"type:varchar(10)" json:"maturity_rating"`
 	IMDBRating      float64         `json:"imdb_rating"`
-	IMDBID          string          `gorm:"uniqueIndex" json:"imdb_id"`
+	IMDBID          string          `gorm:"index" json:"imdb_id"`
 	TMDBID          string          `json:"tmdb_id"`
 	Director        pq.StringArray  `gorm:"type:text[]" json:"director"`
 	Cast            pq.StringArray  `gorm:"type:text[]" json:"cast"`

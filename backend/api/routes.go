@@ -26,7 +26,7 @@ func SetupRouter(db *gorm.DB, redisClient *redis.Client, cfg *config.Config) *gi
 
 	// Initialize services
 	authService := services.NewAuthService(userRepo, cfg)
-	userService := services.NewUserService(userRepo)
+	_ = services.NewUserService(userRepo) // available for future use
 	contentService := services.NewContentService(contentRepo)
 
 	// Initialize handlers

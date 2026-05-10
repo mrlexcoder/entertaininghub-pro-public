@@ -1,13 +1,13 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"log"
-	"os"
 
+	"github.com/entertainzen/entertaininghub-pro/api"
 	"github.com/entertainzen/entertaininghub-pro/internal/config"
 	"github.com/entertainzen/entertaininghub-pro/internal/database"
-	"github.com/entertainzen/entertaininghub-pro/api"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 )
@@ -34,7 +34,7 @@ func main() {
 
 	// Initialize Redis
 	redisClient := database.InitRedis(cfg)
-	if err := redisClient.Ping(redisClient.Context()).Err(); err != nil {
+	if err := redisClient.Ping(context.Background()).Err(); err != nil {
 		log.Fatalf("Failed to connect to Redis: %v", err)
 	}
 
@@ -48,9 +48,8 @@ func main() {
 
 	// Start server
 	addr := fmt.Sprintf(":%s", cfg.Port)
-	log.Printf("🚀 Server starting on %s", addr)
-	log.Printf("📚 API Documentation: http://localhost:%s/api/docs", cfg.Port)
-	log.Printf("🏥 Health Check: http://localhost:%s/api/health", cfg.Port)
+	log.Printf("🚀 EntertainingHub Pro starting on http://localhost%s", addr)
+	log.Printf("🏥 Health Check: http://localhost%s/api/health", addr)
 
 	if err := router.Run(addr); err != nil {
 		log.Fatalf("Failed to start server: %v", err)
