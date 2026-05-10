@@ -1,0 +1,37 @@
+{
+  "name": "entertaininghub-frontend",
+  "version": "1.0.0",
+  "description": "EntertainingHub Pro - Frontend (Lit + TypeScript)",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "lint": "eslint . --ext .ts",
+    "format": "prettier --write \"src/**/*.{ts,css,html}\""
+  },
+  "dependencies": {
+    "lit": "^3.1.0",
+    "@lit/context": "^1.1.0",
+    "@lit/task": "^1.0.0",
+    "@vaadin/router": "^1.7.5"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.6",
+    "@typescript-eslint/eslint-plugin": "^6.17.0",
+    "@typescript-eslint/parser": "^6.17.0",
+    "eslint": "^8.56.0",
+    "prettier": "^3.1.1",
+    "typescript": "^5.3.3",
+    "vite": "^5.0.10",
+    "vite-plugin-html": "^3.2.1"
+  },
+  "keywords": [
+    "lit",
+    "typescript",
+    "entertainment",
+    "streaming"
+  ],
+  "author": "Entertainzen",
+  "license": "MIT"
+}
