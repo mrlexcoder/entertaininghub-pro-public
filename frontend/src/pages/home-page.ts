@@ -101,7 +101,7 @@ export class HomePage extends LitElement {
       flex-wrap: wrap;
       gap: 10px;
       padding: 40px 24px 0;
-      max-width: 1440px;
+      max-width: 1300px;
       margin: 0 auto;
     }
 
@@ -134,7 +134,7 @@ export class HomePage extends LitElement {
       margin-top: 48px;
     }
     .stats-inner {
-      max-width: 1440px;
+      max-width: 1300px;
       margin: 0 auto;
       padding: 32px 24px;
       display: flex;
@@ -160,7 +160,7 @@ export class HomePage extends LitElement {
 
     /* ── Content sections ─────────────────────────────────── */
     .sections {
-      max-width: 1440px;
+      max-width: 1300px;
       margin: 0 auto;
       padding: 64px 24px;
     }

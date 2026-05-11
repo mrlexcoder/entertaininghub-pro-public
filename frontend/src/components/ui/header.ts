@@ -155,7 +155,7 @@ export class AppHeader extends LitElement {
       display: grid;
       grid-template-columns: auto 1fr auto;
       align-items: center;
-      max-width: 1440px;
+      max-width: 1300px;
       margin: 0 auto;
       padding: 0 28px;
       height: 64px;
@@ -275,7 +275,7 @@ export class AppHeader extends LitElement {
 
     /* inner */
     .mega-inner {
-      max-width: 1440px;
+      max-width: 1300px;
       margin: 0 auto;
       padding: 28px 28px 24px;
       display: flex;
@@ -286,8 +286,9 @@ export class AppHeader extends LitElement {
     /* ── Columns ──────────────────────────────────────────── */
     .mega-cols {
       flex: 1;
-      display: flex;
-      gap: 48px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+      gap: 0;
       padding-right: 40px;
       border-right: 1px solid #ebebeb;
     }

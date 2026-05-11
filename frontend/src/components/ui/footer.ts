@@ -12,7 +12,7 @@ export class AppFooter extends LitElement {
     }
 
     .footer {
-      max-width: 1280px;
+      max-width: 1300px;
       margin: 0 auto;
       padding: 56px 24px 32px;
     }

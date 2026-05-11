@@ -120,8 +120,8 @@
   --z-tooltip:        1070;
 
   /* Layout */
-  --max-width:         1440px;
-  --max-width-content: 1200px;
+  --max-width:         1300px;
+  --max-width-content: 1300px;
   --max-width-text:    68ch;
   --header-height:     4rem;
   --grid-gap:          var(--spacing-lg);
