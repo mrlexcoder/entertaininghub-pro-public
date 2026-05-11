@@ -141,16 +141,16 @@ export class AppHeader extends LitElement {
       position: sticky;
       top: 0;
       z-index: 1000;
-      background: #fff;
-      border-bottom: 1px solid #e2e2e2;
+      background: var(--nav-bg, #fff);
+      border-bottom: 1px solid var(--nav-border, #e2e2e2);
+      transition: background 0.25s ease, border-color 0.25s ease;
     }
 
-    /* hide host border when a menu is open — dropdown provides its own top border */
     :host(.menu-open) {
       border-bottom-color: transparent;
     }
 
-    /* ── Navbar — 3-col grid: logo | center | buttons ─────── */
+    /* ── Navbar ───────────────────────────────────────────── */
     .navbar {
       display: grid;
       grid-template-columns: auto 1fr auto;
@@ -173,18 +173,20 @@ export class AppHeader extends LitElement {
     .logo-name {
       font-size: 18px;
       font-weight: 800;
-      color: #1a1a1a;
+      color: var(--nav-text, #1a1a1a);
       letter-spacing: -0.4px;
       font-family: var(--font);
+      transition: color 0.25s;
     }
     .logo-sub {
       font-size: 10px;
       font-weight: 400;
-      color: #888;
+      color: var(--nav-text-muted, #888);
       font-family: var(--font);
+      transition: color 0.25s;
     }
 
-    /* ── Center nav — truly centered ─────────────────────── */
+    /* ── Center nav ───────────────────────────────────────── */
     .nav-center {
       display: flex;
       align-items: center;
@@ -193,7 +195,7 @@ export class AppHeader extends LitElement {
     }
 
     .nav-item {
-      position: relative;   /* anchor dropdown to this item */
+      position: static;
       display: flex;
       align-items: center;
       height: 100%;
@@ -209,32 +211,29 @@ export class AppHeader extends LitElement {
       font-family: var(--font);
       font-size: 18px;
       font-weight: 500;
-      color: #1a1a1a;
+      color: var(--nav-text, #1a1a1a);
       background: none;
       border: none;
       cursor: pointer;
       white-space: nowrap;
       line-height: 1;
+      transition: color 0.25s;
     }
 
-    /* text span inside trigger — gets the underline */
     .trigger-text {
       border-bottom: 2px solid transparent;
       padding-bottom: 1px;
       transition: border-color 0.15s;
     }
-    /* hover: show underline */
-    .nav-trigger:hover .trigger-text { border-bottom-color: #1a1a1a; }
-    /* open: show underline */
-    .nav-item.open .trigger-text { border-bottom-color: #1a1a1a; }
+    .nav-trigger:hover .trigger-text { border-bottom-color: var(--nav-hover-border, #1a1a1a); }
+    .nav-item.open .trigger-text     { border-bottom-color: var(--nav-hover-border, #1a1a1a); }
 
-    /* chevron */
     .chevron {
       width: 11px;
       height: 11px;
-      color: #555;
+      color: var(--nav-text-muted, #555);
       flex-shrink: 0;
-      transition: transform 0.2s;
+      transition: transform 0.2s, color 0.25s;
     }
     .nav-item.open .chevron { transform: rotate(180deg); }
 
@@ -247,39 +246,36 @@ export class AppHeader extends LitElement {
       font-family: var(--font);
       font-size: 18px;
       font-weight: 500;
-      color: #1a1a1a;
+      color: var(--nav-text, #1a1a1a);
       text-decoration: none;
       white-space: nowrap;
+      transition: color 0.25s;
     }
     .nav-plain span {
       border-bottom: 2px solid transparent;
       padding-bottom: 1px;
       transition: border-color 0.15s;
     }
-    .nav-plain:hover span { border-bottom-color: #1a1a1a; }
+    .nav-plain:hover span { border-bottom-color: var(--nav-hover-border, #1a1a1a); }
 
     /* ── MEGA DROPDOWN ────────────────────────────────────── */
-    /* Width = content only, positioned under the trigger */
     .mega {
       display: none;
-      position: absolute;
+      position: fixed;
       top: 64px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: #fff;
-      border: 1px solid #e2e2e2;
-      border-top: none;
-      box-shadow: 0 8px 24px rgba(0,0,0,.12);
+      left: 0;
+      right: 0;
+      background: var(--nav-mega-bg, #fff);
+      border-top: 1px solid var(--nav-mega-border, #e2e2e2);
+      box-shadow: var(--nav-mega-shadow, 0 8px 24px rgba(0,0,0,.10));
       z-index: 999;
-      white-space: nowrap;
-      min-width: max-content;
+      transition: background 0.25s ease;
     }
     .nav-item.open .mega { display: block; }
 
-    /* inner */
     .mega-inner {
-      max-width: none;
-      margin: 0;
+      max-width: 1300px;
+      margin: 0 auto;
       padding: 28px 28px 24px;
       display: flex;
       align-items: flex-start;
@@ -289,23 +285,24 @@ export class AppHeader extends LitElement {
     /* ── Columns ──────────────────────────────────────────── */
     .mega-cols {
       flex: 1;
-      display: flex;
-      gap: 48px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+      gap: 0;
       padding-right: 40px;
-      border-right: 1px solid #ebebeb;
+      border-right: 1px solid var(--nav-col-divider, #ebebeb);
     }
 
     .mega-col { min-width: 130px; }
 
-    /* heading — 17px bold */
     .mega-col-heading {
       display: block;
       font-family: var(--font);
-      font-size: 17px;           /* 19-2 = 17px */
+      font-size: 17px;
       font-weight: 700;
-      color: #1a1a1a;
+      color: var(--nav-text, #1a1a1a);
       margin-bottom: 14px;
       line-height: 1.3;
+      transition: color 0.25s;
     }
 
     .mega-col-list {
@@ -317,28 +314,27 @@ export class AppHeader extends LitElement {
       display: block;
       padding: 5px 0;
       font-family: var(--font);
-      font-size: 15px;           /* 17-2 = 15px */
+      font-size: 15px;
       font-weight: 400;
-      color: #333;
+      color: var(--nav-link-color, #333);
       text-decoration: none;
       line-height: 1.5;
       white-space: nowrap;
       transition: color 0.1s;
     }
     .mega-col-list li a:hover {
-      color: #1a1a1a;
+      color: var(--nav-link-hover, #1a1a1a);
       text-decoration: underline;
       text-underline-offset: 2px;
     }
 
-    /* ── Promo panel — Semrush style: image box + text below ─ */
+    /* ── Promo panel ──────────────────────────────────────── */
     .mega-promo {
       width: 240px;
       flex-shrink: 0;
       padding-left: 40px;
     }
 
-    /* the coloured box (like Semrush's purple image) */
     .promo-img {
       width: 100%;
       height: 180px;
@@ -365,23 +361,25 @@ export class AppHeader extends LitElement {
       font-family: var(--font);
       font-size: 13px;
       font-weight: 700;
-      color: #1a1a1a;
+      color: var(--nav-promo-tag, #1a1a1a);
       letter-spacing: 0.2px;
       margin-bottom: 6px;
+      transition: color 0.25s;
     }
     .promo-body {
       font-family: var(--font);
-      font-size: 15px;           /* 17-2 = 15px */
+      font-size: 15px;
       font-weight: 400;
-      color: #444;
+      color: var(--nav-promo-body, #444);
       line-height: 1.55;
       margin: 0;
+      transition: color 0.25s;
     }
 
     /* ── Backdrop ─────────────────────────────────────────── */
     .backdrop {
       position: fixed;
-      inset: 0;
+      inset: 64px 0 0 0;
       z-index: 998;
       background: transparent;
       pointer-events: none;
@@ -389,11 +387,32 @@ export class AppHeader extends LitElement {
     }
     .backdrop.on { pointer-events: all; }
 
-    /* ── Right: buttons ───────────────────────────────────── */
+    /* ── Right: buttons + theme toggle ───────────────────── */
     .nav-right {
       display: flex;
       align-items: center;
       gap: 10px;
+    }
+
+    /* Theme toggle button */
+    .btn-theme {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 999px;
+      border: 1.5px solid var(--btn-login-border, #b8b8b8);
+      background: transparent;
+      cursor: pointer;
+      font-size: 16px;
+      line-height: 1;
+      transition: border-color 0.15s, background 0.15s;
+      flex-shrink: 0;
+    }
+    .btn-theme:hover {
+      border-color: var(--nav-hover-border, #1a1a1a);
+      background: var(--btn-login-hover-bg, #f5f5f5);
     }
 
     /* Log In — outline pill */
@@ -405,19 +424,22 @@ export class AppHeader extends LitElement {
       font-family: var(--font);
       font-size: 14px;
       font-weight: 500;
-      color: #1a1a1a;
+      color: var(--btn-login-color, #1a1a1a);
       background: transparent;
-      border: 1.5px solid #b8b8b8;
+      border: 1.5px solid var(--btn-login-border, #b8b8b8);
       border-radius: 999px;
       cursor: pointer;
       text-decoration: none;
       white-space: nowrap;
       line-height: 1;
-      transition: border-color 0.15s, background 0.15s;
+      transition: border-color 0.15s, background 0.15s, color 0.25s;
     }
-    .btn-login:hover { border-color: #1a1a1a; background: #f5f5f5; }
+    .btn-login:hover {
+      border-color: var(--nav-hover-border, #1a1a1a);
+      background: var(--btn-login-hover-bg, #f5f5f5);
+    }
 
-    /* Sign Up — filled black pill */
+    /* Sign Up — filled pill */
     .btn-signup {
       display: inline-flex;
       align-items: center;
@@ -426,17 +448,20 @@ export class AppHeader extends LitElement {
       font-family: var(--font);
       font-size: 14px;
       font-weight: 600;
-      color: #fff;
-      background: #1a1a1a;
-      border: 1.5px solid #1a1a1a;
+      color: var(--btn-signup-color, #fff);
+      background: var(--btn-signup-bg, #1a1a1a);
+      border: 1.5px solid var(--btn-signup-bg, #1a1a1a);
       border-radius: 999px;
       cursor: pointer;
       text-decoration: none;
       white-space: nowrap;
       line-height: 1;
-      transition: background 0.15s, border-color 0.15s;
+      transition: background 0.15s, border-color 0.15s, color 0.25s;
     }
-    .btn-signup:hover { background: #333; border-color: #333; }
+    .btn-signup:hover {
+      background: var(--btn-signup-hover, #333);
+      border-color: var(--btn-signup-hover, #333);
+    }
 
     /* Avatar */
     .avatar {
@@ -467,10 +492,26 @@ export class AppHeader extends LitElement {
   @state() private authState?: AuthState;
 
   @state() private openMenu: string | null = null;
+  @state() private isDark = false;
+
+  connectedCallback() {
+    super.connectedCallback();
+    const saved = localStorage.getItem('eh-theme');
+    if (saved === 'dark') this.applyTheme(true);
+  }
+
+  private applyTheme(dark: boolean) {
+    this.isDark = dark;
+    document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+    localStorage.setItem('eh-theme', dark ? 'dark' : 'light');
+  }
+
+  private toggleTheme() {
+    this.applyTheme(!this.isDark);
+  }
 
   private toggle(name: string) {
     this.openMenu = this.openMenu === name ? null : name;
-    // toggle host class so border-bottom hides when menu is open
     this.classList.toggle('menu-open', this.openMenu !== null);
   }
 
@@ -511,7 +552,7 @@ export class AppHeader extends LitElement {
             `)}
           </div>
 
-          <!-- Promo — image box + text below (Semrush style) -->
+          <!-- Promo -->
           <div class="mega-promo">
             <div class="promo-img" style="background:${menu.promo.bg}">
               <span class="promo-img-text">${menu.promo.imgText}</span>
@@ -590,8 +631,16 @@ export class AppHeader extends LitElement {
 
         </div>
 
-        <!-- Right: auth -->
+        <!-- Right: theme toggle + auth -->
         <div class="nav-right">
+          <!-- Theme toggle: shows 🌙 in light mode, ☀️ in dark mode -->
+          <button class="btn-theme"
+                  @click=${() => this.toggleTheme()}
+                  title="${this.isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}"
+                  aria-label="Toggle theme">
+            ${this.isDark ? '☀️' : '🌙'}
+          </button>
+
           ${isAuth ? html`
             <a href="/profile" class="avatar" title="${user?.username}">
               ${user?.username?.charAt(0).toUpperCase() ?? 'U'}
