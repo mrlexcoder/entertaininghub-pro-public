@@ -5,129 +5,155 @@ import type { Content } from '../../types';
 @customElement('content-card')
 export class ContentCard extends LitElement {
   static styles = css`
-    :host {
-      display: block;
-    }
+    :host { display: block; }
 
     .card {
+      display: block;
       position: relative;
-      border-radius: var(--radius-lg);
+      border-radius: 12px;
       overflow: hidden;
-      background: var(--color-background-card);
-      transition: transform var(--transition-base), box-shadow var(--transition-base);
-      cursor: pointer;
-      height: 100%;
+      background: #fff;
+      border: 1px solid #e8e8e8;
+      text-decoration: none;
+      transition: transform .2s ease, box-shadow .2s ease;
+      box-shadow: 0 1px 4px rgba(0,0,0,.06);
     }
-
     .card:hover {
       transform: translateY(-4px);
-      box-shadow: var(--shadow-xl);
+      box-shadow: 0 12px 32px rgba(0,0,0,.12);
     }
 
-    .poster {
+    /* Poster */
+    .poster-wrap {
+      position: relative;
       width: 100%;
       aspect-ratio: 2/3;
+      background: #f1f5f9;
+      overflow: hidden;
+    }
+    .poster {
+      width: 100%;
+      height: 100%;
       object-fit: cover;
-      background: var(--color-background-hover);
+      transition: transform .3s ease;
+    }
+    .card:hover .poster { transform: scale(1.04); }
+
+    /* Maturity badge */
+    .maturity {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      padding: 2px 8px;
+      background: rgba(0,0,0,.65);
+      color: #fff;
+      font-size: 0.65rem;
+      font-weight: 700;
+      border-radius: 4px;
+      letter-spacing: 0.5px;
+      backdrop-filter: blur(4px);
     }
 
-    .content {
-      padding: var(--spacing-md);
+    /* Type badge */
+    .type-badge {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      padding: 2px 8px;
+      background: #6366f1;
+      color: #fff;
+      font-size: 0.6rem;
+      font-weight: 700;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
 
+    /* Info */
+    .info {
+      padding: 12px;
+    }
     .title {
-      font-size: var(--font-size-lg);
-      font-weight: var(--font-weight-semibold);
-      margin-bottom: var(--spacing-xs);
-      color: var(--color-text);
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: #0f172a;
+      margin: 0 0 6px;
       display: -webkit-box;
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
       overflow: hidden;
+      line-height: 1.4;
     }
-
     .meta {
       display: flex;
       align-items: center;
-      gap: var(--spacing-sm);
-      font-size: var(--font-size-sm);
-      color: var(--color-text-muted);
-      margin-bottom: var(--spacing-sm);
+      gap: 8px;
+      font-size: 0.75rem;
+      color: #64748b;
+      flex-wrap: wrap;
     }
-
     .rating {
       display: flex;
       align-items: center;
-      gap: var(--spacing-xs);
-      color: var(--color-accent);
-      font-weight: var(--font-weight-semibold);
+      gap: 3px;
+      color: #f59e0b;
+      font-weight: 600;
     }
-
-    .badge {
-      position: absolute;
-      top: var(--spacing-sm);
-      right: var(--spacing-sm);
-      padding: var(--spacing-xs) var(--spacing-sm);
-      background: var(--color-primary);
-      color: white;
-      border-radius: var(--radius-md);
-      font-size: var(--font-size-xs);
-      font-weight: var(--font-weight-semibold);
-      text-transform: uppercase;
+    .dot {
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background: #cbd5e1;
     }
-
     .genres {
       display: flex;
       flex-wrap: wrap;
-      gap: var(--spacing-xs);
+      gap: 4px;
+      margin-top: 8px;
     }
-
     .genre-tag {
-      padding: var(--spacing-xs) var(--spacing-sm);
-      background: var(--color-background-hover);
-      border-radius: var(--radius-sm);
-      font-size: var(--font-size-xs);
-      color: var(--color-text-secondary);
+      padding: 2px 8px;
+      background: #f1f5f9;
+      border-radius: 999px;
+      font-size: 0.68rem;
+      color: #475569;
+      font-weight: 500;
     }
   `;
 
-  @property({ type: Object })
-  content!: Content;
+  @property({ type: Object }) content!: Content;
 
   render() {
+    const c = this.content;
     return html`
-      <a href="/content/${this.content.id}" class="card">
-        ${this.content.maturity_rating ? html`
-          <span class="badge">${this.content.maturity_rating}</span>
-        ` : ''}
-        
-        <img 
-          class="poster" 
-          src="${this.content.poster_url || '/assets/images/placeholder.jpg'}" 
-          alt="${this.content.title}"
-          loading="lazy"
-        />
-        
-        <div class="content">
-          <h3 class="title">${this.content.title}</h3>
-          
+      <a href="/content/${c.id}" class="card">
+        <div class="poster-wrap">
+          <img
+            class="poster"
+            src="${c.poster_url || '/assets/images/placeholder.jpg'}"
+            alt="${c.title}"
+            loading="lazy"
+          />
+          ${c.maturity_rating ? html`<span class="maturity">${c.maturity_rating}</span>` : ''}
+          <span class="type-badge">${c.content_type}</span>
+        </div>
+
+        <div class="info">
+          <h3 class="title">${c.title}</h3>
           <div class="meta">
-            ${this.content.imdb_rating ? html`
-              <span class="rating">
-                ⭐ ${this.content.imdb_rating.toFixed(1)}
-              </span>
+            ${c.imdb_rating ? html`
+              <span class="rating">⭐ ${c.imdb_rating.toFixed(1)}</span>
+              <span class="dot"></span>
             ` : ''}
-            <span>${this.content.release_year}</span>
-            ${this.content.duration_minutes ? html`
-              <span>${Math.floor(this.content.duration_minutes / 60)}h ${this.content.duration_minutes % 60}m</span>
+            ${c.release_year ? html`<span>${c.release_year}</span>` : ''}
+            ${c.duration_minutes ? html`
+              <span class="dot"></span>
+              <span>${Math.floor(c.duration_minutes / 60)}h ${c.duration_minutes % 60}m</span>
             ` : ''}
           </div>
-
-          ${this.content.genre && this.content.genre.length > 0 ? html`
+          ${c.genre?.length ? html`
             <div class="genres">
-              ${this.content.genre.slice(0, 3).map(genre => html`
-                <span class="genre-tag">${genre}</span>
-              `)}
+              ${c.genre.slice(0, 2).map(g => html`<span class="genre-tag">${g}</span>`)}
             </div>
           ` : ''}
         </div>

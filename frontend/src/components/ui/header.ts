@@ -4,218 +4,460 @@ import { consume } from '@lit/context';
 import { authContext, type AuthState } from '../../stores/auth-store';
 import { authService } from '../../services/auth-service';
 
+/* ─────────────────────────────────────────────────────────────
+   Mega-menu data  (mirrors Semrush column layout)
+───────────────────────────────────────────────────────────── */
+const BROWSE_MENU = {
+  cols: [
+    {
+      heading: 'Browse',
+      items: [
+        { label: 'All Content',    href: '/explore'           },
+        { label: 'New Releases',   href: '/explore?sort=new'  },
+        { label: 'Top Rated',      href: '/explore?sort=top'  },
+        { label: 'Free to Watch',  href: '/explore?tier=free' },
+      ],
+    },
+    {
+      heading: 'Categories',
+      items: [
+        { label: 'Movies',         href: '/category/movie'       },
+        { label: 'Series',         href: '/category/series'      },
+        { label: 'Anime',          href: '/category/anime'       },
+        { label: 'Documentaries',  href: '/category/documentary' },
+        { label: 'Gaming',         href: '/category/gaming'      },
+        { label: '18+ Series',     href: '/category/18plus'      },
+      ],
+    },
+    {
+      heading: 'Discover',
+      items: [
+        { label: 'Trending Now',   href: '/trending'             },
+        { label: 'Recommended',    href: '/recommendations'      },
+        { label: 'By Genre',       href: '/explore?view=genre'   },
+        { label: 'By Language',    href: '/explore?view=lang'    },
+      ],
+    },
+  ],
+  promo: {
+    tag:   'PREMIUM',
+    title: 'Unlock All Content',
+    body:  'Ad-free streaming, exclusive titles & AI-powered recommendations.',
+    cta:   'Try Premium Free',
+    href:  '/register',
+    bg:    'linear-gradient(135deg,#6366f1 0%,#ec4899 100%)',
+  },
+};
+
+const CREATORS_MENU = {
+  cols: [
+    {
+      heading: 'For Creators',
+      items: [
+        { label: 'Creator Dashboard', href: '/creator'          },
+        { label: 'Upload Content',    href: '/creator/upload'   },
+        { label: 'Revenue Share',     href: '/creator/revenue'  },
+        { label: 'Analytics',         href: '/creator/analytics'},
+      ],
+    },
+    {
+      heading: 'Platform',
+      items: [
+        { label: 'API Access',        href: '/api-docs'         },
+        { label: 'Integrations',      href: '/integrations'     },
+        { label: 'Creator Blog',      href: '/blog'             },
+      ],
+    },
+  ],
+  promo: null,
+};
+
 @customElement('app-header')
 export class AppHeader extends LitElement {
   static styles = css`
+    /* ── Host ─────────────────────────────────────────────── */
     :host {
       display: block;
       position: sticky;
       top: 0;
-      z-index: var(--z-sticky);
-      background: var(--color-background-elevated);
-      border-bottom: 1px solid var(--color-border);
-      backdrop-filter: blur(10px);
+      z-index: 1000;
+      background: #ffffff;
+      border-bottom: 1px solid #e8e8e8;
     }
 
-    .header {
+    /* ── Wrapper ──────────────────────────────────────────── */
+    .navbar {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      max-width: var(--max-width);
+      max-width: 1280px;
       margin: 0 auto;
-      padding: var(--spacing-md) var(--spacing-lg);
-      height: var(--header-height);
+      padding: 0 24px;
+      height: 64px;
+      gap: 0;
     }
 
+    /* ── Logo ─────────────────────────────────────────────── */
     .logo {
       display: flex;
-      align-items: center;
-      gap: var(--spacing-sm);
-      font-family: var(--font-family-heading);
-      font-size: var(--font-size-xl);
-      font-weight: var(--font-weight-bold);
-      color: var(--color-primary);
+      flex-direction: column;
+      align-items: flex-start;
       text-decoration: none;
+      margin-right: 32px;
+      flex-shrink: 0;
+    }
+    .logo-name {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: #1a1a1a;
+      line-height: 1;
+      letter-spacing: -0.5px;
+    }
+    .logo-sub {
+      font-size: 0.6rem;
+      font-weight: 500;
+      color: #888;
+      letter-spacing: 0.3px;
+      margin-top: 1px;
     }
 
-    .logo:hover {
-      color: var(--color-primary-light);
-    }
-
-    nav {
+    /* ── Center nav ───────────────────────────────────────── */
+    .nav-center {
       display: flex;
       align-items: center;
-      gap: var(--spacing-lg);
+      gap: 2px;
+      flex: 1;
     }
 
-    .nav-links {
-      display: flex;
-      gap: var(--spacing-md);
-    }
-
-    .nav-link {
-      padding: var(--spacing-sm) var(--spacing-md);
-      color: var(--color-text-secondary);
-      font-weight: var(--font-weight-medium);
-      border-radius: var(--radius-md);
-      transition: all var(--transition-fast);
-    }
-
-    .nav-link:hover {
-      color: var(--color-text);
-      background: var(--color-background-hover);
-    }
-
-    .nav-link.active {
-      color: var(--color-primary);
-      background: rgba(99, 102, 241, 0.1);
-    }
-
-    .search-box {
+    /* nav trigger button */
+    .nav-item {
       position: relative;
     }
-
-    .search-input {
-      width: 300px;
-      padding: var(--spacing-sm) var(--spacing-md);
-      padding-left: 2.5rem;
-      background: var(--color-background-card);
-      border: 1px solid var(--color-border);
-      border-radius: var(--radius-full);
-      color: var(--color-text);
-    }
-
-    .search-icon {
-      position: absolute;
-      left: var(--spacing-md);
-      top: 50%;
-      transform: translateY(-50%);
-      color: var(--color-text-muted);
-    }
-
-    .user-menu {
+    .nav-trigger {
       display: flex;
       align-items: center;
-      gap: var(--spacing-md);
-    }
-
-    .btn {
-      padding: var(--spacing-sm) var(--spacing-lg);
-      border-radius: var(--radius-md);
-      font-weight: var(--font-weight-medium);
-      transition: all var(--transition-fast);
+      gap: 5px;
+      padding: 8px 14px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: #1a1a1a;
+      background: none;
+      border: none;
+      border-radius: 8px;
       cursor: pointer;
+      transition: background 0.15s;
+      white-space: nowrap;
+      text-decoration: none;
+    }
+    .nav-trigger:hover,
+    .nav-item:hover .nav-trigger {
+      background: #f5f5f5;
+    }
+    .nav-trigger svg {
+      width: 14px;
+      height: 14px;
+      color: #666;
+      transition: transform 0.2s;
+      flex-shrink: 0;
+    }
+    .nav-item:hover .nav-trigger svg {
+      transform: rotate(180deg);
     }
 
-    .btn-primary {
-      background: var(--color-primary);
-      color: white;
+    /* external-link icon (↗) */
+    .ext-icon {
+      font-size: 0.75rem;
+      color: #888;
+      margin-left: 2px;
     }
 
-    .btn-primary:hover {
-      background: var(--color-primary-dark);
+    /* ── Mega-menu panel ──────────────────────────────────── */
+    .mega {
+      display: none;
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 0;
+      background: #ffffff;
+      border: 1px solid #e8e8e8;
+      border-radius: 16px;
+      box-shadow: 0 8px 40px rgba(0,0,0,.12);
+      padding: 28px;
+      gap: 32px;
+      min-width: 680px;
+      z-index: 2000;
+      animation: fadeDown .18s ease;
+    }
+    .mega.has-promo {
+      display: none; /* toggled by hover */
+    }
+    .nav-item:hover .mega {
+      display: flex;
     }
 
-    .btn-outline {
-      border: 1px solid var(--color-border);
-      color: var(--color-text);
+    @keyframes fadeDown {
+      from { opacity:0; transform:translateY(-6px); }
+      to   { opacity:1; transform:translateY(0);    }
     }
 
-    .btn-outline:hover {
-      background: var(--color-background-hover);
+    /* columns */
+    .mega-cols {
+      display: flex;
+      gap: 32px;
+      flex: 1;
+    }
+    .mega-col h4 {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: #999;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-bottom: 12px;
+    }
+    .mega-col ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .mega-col ul li a {
+      display: block;
+      padding: 6px 10px;
+      font-size: 0.875rem;
+      color: #333;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: background 0.12s, color 0.12s;
+      white-space: nowrap;
+    }
+    .mega-col ul li a:hover {
+      background: #f0f0ff;
+      color: #6366f1;
     }
 
+    /* promo card */
+    .mega-promo {
+      width: 220px;
+      flex-shrink: 0;
+      border-radius: 14px;
+      padding: 20px;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 180px;
+    }
+    .promo-tag {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      background: rgba(255,255,255,.25);
+      border-radius: 4px;
+      padding: 2px 7px;
+      display: inline-block;
+      margin-bottom: 10px;
+    }
+    .promo-title {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      line-height: 1.3;
+      margin-bottom: 8px;
+    }
+    .promo-body {
+      font-size: 0.78rem;
+      opacity: .88;
+      line-height: 1.5;
+      margin-bottom: 16px;
+    }
+    .promo-cta {
+      display: inline-block;
+      background: #fff;
+      color: #6366f1;
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 8px 16px;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: opacity .15s;
+      align-self: flex-start;
+    }
+    .promo-cta:hover { opacity: .88; }
+
+    /* ── Right side ───────────────────────────────────────── */
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-left: auto;
+      flex-shrink: 0;
+    }
+
+    /* Login — outline pill */
+    .btn-login {
+      padding: 8px 22px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: #1a1a1a;
+      background: transparent;
+      border: 1.5px solid #c8c8c8;
+      border-radius: 999px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: border-color .15s, background .15s;
+      white-space: nowrap;
+    }
+    .btn-login:hover {
+      border-color: #1a1a1a;
+      background: #f5f5f5;
+    }
+
+    /* Sign Up — filled black pill */
+    .btn-signup {
+      padding: 8px 22px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: #ffffff;
+      background: #1a1a1a;
+      border: 1.5px solid #1a1a1a;
+      border-radius: 999px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background .15s, border-color .15s;
+      white-space: nowrap;
+    }
+    .btn-signup:hover {
+      background: #333;
+      border-color: #333;
+    }
+
+    /* Avatar (logged-in) */
     .avatar {
-      width: 2.5rem;
-      height: 2.5rem;
-      border-radius: var(--radius-full);
-      background: var(--color-primary);
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #6366f1;
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.875rem;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: white;
-      font-weight: var(--font-weight-semibold);
-      cursor: pointer;
+      text-decoration: none;
+      flex-shrink: 0;
     }
 
-    @media (max-width: 768px) {
-      .nav-links {
-        display: none;
-      }
-
-      .search-input {
-        width: 200px;
-      }
+    /* ── Mobile ───────────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .nav-center { display: none; }
+      .mega       { display: none !important; }
     }
   `;
 
   @consume({ context: authContext, subscribe: true })
-  @state()
-  private authState?: AuthState;
+  @state() private authState?: AuthState;
 
-  private handleLogout() {
-    authService.logout();
+  /* chevron SVG */
+  private chevron() {
+    return html`
+      <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+        <path fill-rule="evenodd"
+          d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+          clip-rule="evenodd"/>
+      </svg>`;
+  }
+
+  /* render one mega-menu */
+  private renderMega(menu: typeof BROWSE_MENU) {
+    return html`
+      <div class="mega ${menu.promo ? 'has-promo' : ''}">
+        <div class="mega-cols">
+          ${menu.cols.map(col => html`
+            <div class="mega-col">
+              <h4>${col.heading}</h4>
+              <ul>
+                ${col.items.map(item => html`
+                  <li><a href="${item.href}">${item.label}</a></li>
+                `)}
+              </ul>
+            </div>
+          `)}
+        </div>
+
+        ${menu.promo ? html`
+          <div class="mega-promo" style="background:${menu.promo.bg}">
+            <div>
+              <span class="promo-tag">${menu.promo.tag}</span>
+              <p class="promo-title">${menu.promo.title}</p>
+              <p class="promo-body">${menu.promo.body}</p>
+            </div>
+            <a href="${menu.promo.href}" class="promo-cta">${menu.promo.cta}</a>
+          </div>
+        ` : ''}
+      </div>
+    `;
   }
 
   render() {
     const isAuth = this.authState?.isAuthenticated;
-    const user = this.authState?.user;
+    const user   = this.authState?.user;
 
     return html`
-      <header class="header">
+      <nav class="navbar">
+
+        <!-- ── Logo ── -->
         <a href="/" class="logo">
-          🎬 EntertainingHub
+          <span class="logo-name">EntertainingHub</span>
+          <span class="logo-sub">entertainingzen.com</span>
         </a>
 
-        <nav>
-          <div class="nav-links">
-            <a href="/" class="nav-link">Home</a>
-            <a href="/explore" class="nav-link">Explore</a>
-            <a href="/trending" class="nav-link">Trending</a>
-            ${isAuth ? html`
-              <a href="/watchlist" class="nav-link">Watchlist</a>
-            ` : ''}
+        <!-- ── Center nav ── -->
+        <div class="nav-center">
+
+          <!-- Browse (mega) -->
+          <div class="nav-item">
+            <button class="nav-trigger">
+              Browse ${this.chevron()}
+            </button>
+            ${this.renderMega(BROWSE_MENU)}
           </div>
 
-          <div class="search-box">
-            <span class="search-icon">🔍</span>
-            <input 
-              type="search" 
-              class="search-input" 
-              placeholder="Search movies, series, anime..."
-              @input=${this.handleSearch}
-            />
+          <!-- Pricing (plain link) -->
+          <a href="/pricing" class="nav-trigger">Pricing</a>
+
+          <!-- Creators (mega) -->
+          <div class="nav-item">
+            <button class="nav-trigger">
+              Creators ${this.chevron()}
+            </button>
+            ${this.renderMega(CREATORS_MENU)}
           </div>
 
-          <div class="user-menu">
-            ${isAuth ? html`
-              <a href="/profile" class="avatar" title="${user?.username}">
-                ${user?.username?.charAt(0).toUpperCase()}
-              </a>
-              <button class="btn btn-outline" @click=${this.handleLogout}>
-                Logout
-              </button>
-            ` : html`
-              <a href="/login">
-                <button class="btn btn-outline">Login</button>
-              </a>
-              <a href="/register">
-                <button class="btn btn-primary">Sign Up</button>
-              </a>
-            `}
-          </div>
-        </nav>
-      </header>
+          <!-- Enterprise (external-style) -->
+          <a href="/enterprise" class="nav-trigger">
+            Enterprise <span class="ext-icon">↗</span>
+          </a>
+
+        </div>
+
+        <!-- ── Right side ── -->
+        <div class="nav-right">
+          ${isAuth ? html`
+            <a href="/profile" class="avatar" title="${user?.username}">
+              ${user?.username?.charAt(0).toUpperCase() ?? 'U'}
+            </a>
+            <button class="btn-login" @click=${() => authService.logout()}>
+              Log Out
+            </button>
+          ` : html`
+            <a href="/login"    class="btn-login">Log In</a>
+            <a href="/register" class="btn-signup">Sign Up</a>
+          `}
+        </div>
+
+      </nav>
     `;
-  }
-
-  private handleSearch(e: Event) {
-    const input = e.target as HTMLInputElement;
-    const query = input.value.trim();
-    
-    if (query.length > 2) {
-      window.location.href = `/search?q=${encodeURIComponent(query)}`;
-    }
   }
 }
 
