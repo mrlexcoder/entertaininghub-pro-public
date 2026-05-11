@@ -160,34 +160,34 @@ export class AppHeader extends LitElement {
     .navbar {
       display: flex;
       align-items: center;
-      max-width: 1280px;
+      max-width: 1440px;
       margin: 0 auto;
-      padding: 0 20px;
-      height: 56px;
+      padding: 0 28px;
+      height: 68px;           /* Semrush is ~68px tall */
       font-family: var(--font-body);
     }
 
-    /* ── Logo ─────────────────────────────────────────────── */
+    /* ── Logo — matches Semrush bold logo + tagline ───────── */
     .logo {
       display: flex;
       flex-direction: column;
       text-decoration: none;
-      margin-right: 32px;
+      margin-right: 40px;
       flex-shrink: 0;
       line-height: 1;
-      gap: 2px;
+      gap: 3px;
     }
     .logo-name {
       font-family: var(--font-body);
-      font-size: 15px;
-      font-weight: 700;
+      font-size: 18px;          /* Semrush logo is ~18-20px */
+      font-weight: 800;
       color: #1a1a1a;
-      letter-spacing: -0.2px;
+      letter-spacing: -0.4px;
     }
     .logo-sub {
-      font-size: 10px;
+      font-size: 10.5px;
       font-weight: 400;
-      color: #999;
+      color: #888;
       letter-spacing: 0;
     }
 
@@ -206,15 +206,15 @@ export class AppHeader extends LitElement {
       align-items: center;
     }
 
-    /* trigger button */
+    /* trigger button — Semrush uses ~15px medium weight */
     .nav-trigger {
       display: inline-flex;
       align-items: center;
-      gap: 3px;
-      padding: 0 12px;
-      height: 56px;
+      gap: 4px;
+      padding: 0 14px;
+      height: 68px;
       font-family: var(--font-body);
-      font-size: 14px;
+      font-size: 15px;          /* Semrush nav font size */
       font-weight: 500;
       color: #1a1a1a;
       background: none;
@@ -226,7 +226,6 @@ export class AppHeader extends LitElement {
       line-height: 1;
       transition: border-color 0.15s ease;
     }
-    /* hover & open state — underline only, no bg */
     .nav-trigger:hover,
     .nav-item:hover > .nav-trigger {
       border-bottom-color: #1a1a1a;
@@ -234,8 +233,8 @@ export class AppHeader extends LitElement {
 
     /* chevron SVG */
     .nav-trigger .chevron {
-      width: 11px;
-      height: 11px;
+      width: 12px;
+      height: 12px;
       color: #555;
       transition: transform 0.2s ease;
       flex-shrink: 0;
@@ -245,14 +244,14 @@ export class AppHeader extends LitElement {
       transform: rotate(180deg);
     }
 
-    /* plain link (no dropdown) */
+    /* plain link */
     .nav-plain {
       display: inline-flex;
       align-items: center;
-      padding: 0 12px;
-      height: 56px;
+      padding: 0 14px;
+      height: 68px;
       font-family: var(--font-body);
-      font-size: 14px;
+      font-size: 15px;
       font-weight: 500;
       color: #1a1a1a;
       text-decoration: none;
@@ -262,45 +261,41 @@ export class AppHeader extends LitElement {
     }
     .nav-plain:hover { border-bottom-color: #1a1a1a; }
 
-    /* ── MEGA DROPDOWN ────────────────────────────────────── */
-    /* Full viewport width, NO border-radius, flat edges */
+    /* ── MEGA DROPDOWN — full width, NO border-radius ─────── */
     .mega {
       display: none;
       position: fixed;
-      top: 56px;
+      top: 68px;
       left: 0;
       right: 0;
       background: #ffffff;
       border-top: 1px solid #e2e2e2;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.09);
       z-index: 999;
     }
     .nav-item:hover .mega { display: block; }
 
-    /* inner container — max-width centered */
     .mega-inner {
-      max-width: 1280px;
+      max-width: 1440px;
       margin: 0 auto;
-      padding: 28px 20px 24px;
+      padding: 32px 28px 28px;
       display: flex;
       align-items: flex-start;
-      gap: 0;
       font-family: var(--font-body);
     }
 
-    /* ── Left: columns area ───────────────────────────────── */
+    /* ── Left: columns ────────────────────────────────────── */
     .mega-cols {
       flex: 1;
       display: flex;
-      gap: 40px;
-      padding-right: 36px;
+      gap: 48px;
+      padding-right: 40px;
       border-right: 1px solid #e8e8e8;
     }
 
-    /* single column */
-    .mega-col { min-width: 130px; }
+    .mega-col { min-width: 140px; }
 
-    /* column heading — bold, small, dark */
+    /* column heading — Semrush: bold, ~12px, dark */
     .mega-col-heading {
       display: block;
       font-family: var(--font-body);
@@ -308,11 +303,10 @@ export class AppHeader extends LitElement {
       font-weight: 700;
       color: #1a1a1a;
       letter-spacing: 0;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
       line-height: 1.3;
     }
 
-    /* list */
     .mega-col-list {
       list-style: none;
       margin: 0;
@@ -320,12 +314,12 @@ export class AppHeader extends LitElement {
     }
     .mega-col-list li { margin: 0; padding: 0; }
 
-    /* link — plain text, no bg, underline on hover */
+    /* Semrush links: ~14px, regular weight, #333 */
     .mega-col-list li a {
       display: block;
-      padding: 4px 0;
+      padding: 5px 0;
       font-family: var(--font-body);
-      font-size: 13.5px;
+      font-size: 14px;
       font-weight: 400;
       color: #333333;
       text-decoration: none;
@@ -341,20 +335,20 @@ export class AppHeader extends LitElement {
 
     /* ── Right: promo card ────────────────────────────────── */
     .mega-promo {
-      width: 230px;
+      width: 250px;
       flex-shrink: 0;
-      padding-left: 36px;
+      padding-left: 40px;
       display: flex;
       flex-direction: column;
     }
 
     .promo-card {
-      border-radius: 10px;
-      padding: 20px 18px 18px;
+      border-radius: 12px;
+      padding: 22px 20px 20px;
       color: #fff;
       display: flex;
       flex-direction: column;
-      min-height: 200px;
+      min-height: 210px;
     }
 
     .promo-tag {
@@ -362,28 +356,28 @@ export class AppHeader extends LitElement {
       font-family: var(--font-body);
       font-size: 10px;
       font-weight: 700;
-      letter-spacing: 0.6px;
-      color: rgba(255, 255, 255, 0.75);
+      letter-spacing: 0.7px;
+      color: rgba(255,255,255,0.75);
       margin-bottom: 8px;
       text-transform: uppercase;
     }
 
     .promo-title {
       font-family: var(--font-body);
-      font-size: 18px;
+      font-size: 20px;
       font-weight: 800;
       line-height: 1.2;
       color: #fff;
-      margin: 0 0 8px;
+      margin: 0 0 10px;
       white-space: pre-line;
     }
 
     .promo-body {
       font-family: var(--font-body);
-      font-size: 12.5px;
+      font-size: 13px;
       line-height: 1.55;
-      color: rgba(255, 255, 255, 0.85);
-      margin: 0 0 16px;
+      color: rgba(255,255,255,0.85);
+      margin: 0 0 18px;
       flex: 1;
     }
 
@@ -393,9 +387,9 @@ export class AppHeader extends LitElement {
       background: #ffffff;
       color: #1a1a1a;
       font-family: var(--font-body);
-      font-size: 12px;
+      font-size: 12.5px;
       font-weight: 700;
-      padding: 7px 14px;
+      padding: 8px 16px;
       border-radius: 6px;
       text-decoration: none;
       transition: opacity 0.15s ease;
@@ -406,22 +400,23 @@ export class AppHeader extends LitElement {
     .nav-right {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
       margin-left: auto;
       flex-shrink: 0;
     }
 
-    /* Log In — outline pill (Semrush style) */
+    /* Log In — outline pill, Semrush ~14px, border #c0c0c0 */
     .btn-login {
       display: inline-flex;
       align-items: center;
-      padding: 7px 20px;
+      justify-content: center;
+      padding: 9px 24px;
       font-family: var(--font-body);
       font-size: 14px;
       font-weight: 500;
       color: #1a1a1a;
       background: transparent;
-      border: 1.5px solid #c0c0c0;
+      border: 1.5px solid #b8b8b8;
       border-radius: 999px;
       cursor: pointer;
       text-decoration: none;
@@ -434,11 +429,12 @@ export class AppHeader extends LitElement {
       background: #f5f5f5;
     }
 
-    /* Sign Up — filled black pill (Semrush style) */
+    /* Sign Up — filled black pill, Semrush ~14px bold */
     .btn-signup {
       display: inline-flex;
       align-items: center;
-      padding: 7px 20px;
+      justify-content: center;
+      padding: 9px 24px;
       font-family: var(--font-body);
       font-size: 14px;
       font-weight: 600;
@@ -457,16 +453,16 @@ export class AppHeader extends LitElement {
       border-color: #333333;
     }
 
-    /* Avatar (logged in) */
+    /* Avatar */
     .avatar {
-      width: 32px;
-      height: 32px;
+      width: 34px;
+      height: 34px;
       border-radius: 50%;
       background: #6366f1;
       color: #fff;
       font-family: var(--font-body);
       font-weight: 700;
-      font-size: 13px;
+      font-size: 14px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -475,7 +471,7 @@ export class AppHeader extends LitElement {
     }
 
     /* ── Mobile ───────────────────────────────────────────── */
-    @media (max-width: 900px) {
+    @media (max-width: 960px) {
       .nav-center { display: none; }
       .mega       { display: none !important; }
     }
