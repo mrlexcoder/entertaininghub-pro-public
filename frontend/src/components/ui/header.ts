@@ -207,12 +207,11 @@ export class AppHeader extends LitElement {
       padding: 0 14px;
       height: 64px;
       font-family: var(--font);
-      font-size: 22px;           /* ← main nav 22px */
+      font-size: 18px;
       font-weight: 500;
       color: #1a1a1a;
       background: none;
       border: none;
-      /* underline lives on the text span, not the button */
       cursor: pointer;
       white-space: nowrap;
       line-height: 1;
@@ -246,7 +245,7 @@ export class AppHeader extends LitElement {
       padding: 0 14px;
       height: 64px;
       font-family: var(--font);
-      font-size: 22px;           /* ← main nav 22px */
+      font-size: 18px;
       font-weight: 500;
       color: #1a1a1a;
       text-decoration: none;
@@ -295,11 +294,11 @@ export class AppHeader extends LitElement {
 
     .mega-col { min-width: 130px; }
 
-    /* heading — 19px bold */
+    /* heading — 17px bold */
     .mega-col-heading {
       display: block;
       font-family: var(--font);
-      font-size: 19px;           /* ← submenu heading 19px */
+      font-size: 17px;           /* 19-2 = 17px */
       font-weight: 700;
       color: #1a1a1a;
       margin-bottom: 14px;
@@ -315,7 +314,7 @@ export class AppHeader extends LitElement {
       display: block;
       padding: 5px 0;
       font-family: var(--font);
-      font-size: 17px;           /* ← submenu links 17px */
+      font-size: 15px;           /* 17-2 = 15px */
       font-weight: 400;
       color: #333;
       text-decoration: none;
@@ -323,7 +322,6 @@ export class AppHeader extends LitElement {
       white-space: nowrap;
       transition: color 0.1s;
     }
-    /* hover = underline only, no bg */
     .mega-col-list li a:hover {
       color: #1a1a1a;
       text-decoration: underline;
@@ -370,7 +368,7 @@ export class AppHeader extends LitElement {
     }
     .promo-body {
       font-family: var(--font);
-      font-size: 17px;           /* ← matches submenu link size */
+      font-size: 15px;           /* 17-2 = 15px */
       font-weight: 400;
       color: #444;
       line-height: 1.55;
