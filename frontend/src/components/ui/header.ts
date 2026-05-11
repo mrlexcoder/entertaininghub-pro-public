@@ -142,8 +142,12 @@ export class AppHeader extends LitElement {
       top: 0;
       z-index: 1000;
       background: #fff;
-      /* bottom border only shows when no dropdown open */
       border-bottom: 1px solid #e2e2e2;
+    }
+
+    /* hide host border when a menu is open — dropdown provides its own top border */
+    :host(.menu-open) {
+      border-bottom-color: transparent;
     }
 
     /* ── Navbar — 3-col grid: logo | center | buttons ─────── */
@@ -256,16 +260,15 @@ export class AppHeader extends LitElement {
     .nav-plain:hover span { border-bottom-color: #1a1a1a; }
 
     /* ── MEGA DROPDOWN ────────────────────────────────────── */
-    /* Flush against navbar — no gap, no border-radius */
+    /* Flush against navbar — zero gap, no border-radius */
     .mega {
       display: none;
       position: fixed;
-      top: 64px;          /* exactly navbar height — no gap */
+      top: 64px;
       left: 0;
       right: 0;
       background: #fff;
       border-top: 1px solid #e2e2e2;
-      border-bottom: 1px solid #e2e2e2;
       box-shadow: 0 8px 24px rgba(0,0,0,.10);
       z-index: 999;
     }
@@ -377,13 +380,14 @@ export class AppHeader extends LitElement {
 
     /* ── Backdrop ─────────────────────────────────────────── */
     .backdrop {
-      display: none;
       position: fixed;
       inset: 64px 0 0 0;
       z-index: 998;
       background: transparent;
+      pointer-events: none;   /* invisible — doesn't block anything */
+      display: block;
     }
-    .backdrop.on { display: block; }
+    .backdrop.on { pointer-events: all; } /* active — catches outside clicks */
 
     /* ── Right: buttons ───────────────────────────────────── */
     .nav-right {
@@ -466,10 +470,13 @@ export class AppHeader extends LitElement {
 
   private toggle(name: string) {
     this.openMenu = this.openMenu === name ? null : name;
+    // toggle host class so border-bottom hides when menu is open
+    this.classList.toggle('menu-open', this.openMenu !== null);
   }
 
   private close() {
     this.openMenu = null;
+    this.classList.remove('menu-open');
   }
 
   private chevronSvg() {
