@@ -5,94 +5,124 @@ import { authContext, type AuthState } from '../../stores/auth-store';
 import { authService } from '../../services/auth-service';
 
 /* ─────────────────────────────────────────────────────────────
-   Mega-menu data  (mirrors Semrush column layout)
+   Menu data — tailored to entertainingzen.com
 ───────────────────────────────────────────────────────────── */
 const BROWSE_MENU = {
+  heading: 'Browse',
   cols: [
     {
-      heading: 'Browse',
+      label: 'CONTENT',
       items: [
-        { label: 'All Content',    href: '/explore'           },
-        { label: 'New Releases',   href: '/explore?sort=new'  },
-        { label: 'Top Rated',      href: '/explore?sort=top'  },
-        { label: 'Free to Watch',  href: '/explore?tier=free' },
+        { icon: '🎬', title: 'Movies',        desc: 'Hollywood, Bollywood & world cinema',  href: '/category/movie'       },
+        { icon: '📺', title: 'Series',         desc: 'Binge-worthy shows & seasons',         href: '/category/series'      },
+        { icon: '🎌', title: 'Anime',          desc: 'Japanese animation & manga adaptations',href: '/category/anime'       },
+        { icon: '🎥', title: 'Documentaries',  desc: 'Real stories, real impact',            href: '/category/documentary' },
+        { icon: '🎮', title: 'Gaming',         desc: 'Game reviews, trailers & walkthroughs',href: '/category/gaming'      },
+        { icon: '🔞', title: '18+ Series',     desc: 'Mature content for adult audiences',   href: '/category/18plus'      },
       ],
     },
     {
-      heading: 'Categories',
+      label: 'DISCOVER',
       items: [
-        { label: 'Movies',         href: '/category/movie'       },
-        { label: 'Series',         href: '/category/series'      },
-        { label: 'Anime',          href: '/category/anime'       },
-        { label: 'Documentaries',  href: '/category/documentary' },
-        { label: 'Gaming',         href: '/category/gaming'      },
-        { label: '18+ Series',     href: '/category/18plus'      },
-      ],
-    },
-    {
-      heading: 'Discover',
-      items: [
-        { label: 'Trending Now',   href: '/trending'             },
-        { label: 'Recommended',    href: '/recommendations'      },
-        { label: 'By Genre',       href: '/explore?view=genre'   },
-        { label: 'By Language',    href: '/explore?view=lang'    },
+        { icon: '🔥', title: 'Trending Now',   desc: 'What everyone is watching today',      href: '/trending'             },
+        { icon: '⭐', title: 'Top Rated',       desc: 'Highest rated across all categories',  href: '/explore?sort=top'     },
+        { icon: '🆕', title: 'New Releases',   desc: 'Fresh titles added this week',         href: '/explore?sort=new'     },
+        { icon: '🤖', title: 'Recommended',    desc: 'AI-curated picks just for you',        href: '/recommendations'      },
       ],
     },
   ],
-  promo: {
-    tag:   'PREMIUM',
-    title: 'Unlock All Content',
-    body:  'Ad-free streaming, exclusive titles & AI-powered recommendations.',
-    cta:   'Try Premium Free',
-    href:  '/register',
-    bg:    'linear-gradient(135deg,#6366f1 0%,#ec4899 100%)',
-  },
+  whatsNew: [
+    { icon: '✨', title: 'AI Recommendations', badge: 'New',  desc: 'Personalised picks powered by AI'       },
+    { icon: '🎭', title: 'Anime Movies',        badge: 'Beta', desc: 'Full-length anime films now available'  },
+    { icon: '📱', title: 'Mobile PWA',          badge: 'Beta', desc: 'Install EntertainingHub on your phone'  },
+    { icon: '👥', title: 'Watchlists',          badge: null,   desc: 'Share lists with friends'               },
+  ],
+  footer: [
+    { icon: '🗂️', label: 'Browse all categories' , href: '/explore'         },
+    { icon: '📋', label: 'View use cases',          href: '/use-cases'       },
+    { icon: '🚀', label: 'Join Early Access',       href: '/register'        },
+  ],
 };
 
 const CREATORS_MENU = {
+  heading: 'Creators',
   cols: [
     {
-      heading: 'For Creators',
+      label: 'TOOLS',
       items: [
-        { label: 'Creator Dashboard', href: '/creator'          },
-        { label: 'Upload Content',    href: '/creator/upload'   },
-        { label: 'Revenue Share',     href: '/creator/revenue'  },
-        { label: 'Analytics',         href: '/creator/analytics'},
+        { icon: '📤', title: 'Upload Content',    desc: 'Publish movies, series & more',       href: '/creator/upload'    },
+        { icon: '📊', title: 'Analytics',         desc: 'Track views, ratings & revenue',      href: '/creator/analytics' },
+        { icon: '💰', title: 'Revenue Share',     desc: '60/40 split — earn from your content',href: '/creator/revenue'   },
+        { icon: '🎛️', title: 'Creator Dashboard', desc: 'Manage all your content in one place',href: '/creator'           },
       ],
     },
     {
-      heading: 'Platform',
+      label: 'PLATFORM',
       items: [
-        { label: 'API Access',        href: '/api-docs'         },
-        { label: 'Integrations',      href: '/integrations'     },
-        { label: 'Creator Blog',      href: '/blog'             },
+        { icon: '🔌', title: 'API Access',        desc: 'Integrate with our REST API',         href: '/api-docs'          },
+        { icon: '🔗', title: 'Integrations',      desc: 'Connect with IMDb, TMDB & more',      href: '/integrations'      },
+        { icon: '📝', title: 'Creator Blog',      desc: 'Tips, guides & platform updates',     href: '/blog'              },
       ],
     },
   ],
-  promo: null,
+  whatsNew: [
+    { icon: '💳', title: 'Stripe Payouts',   badge: 'New',  desc: 'Get paid directly to your bank'         },
+    { icon: '📈', title: 'Advanced Stats',   badge: 'Beta', desc: 'Deep-dive analytics for creators'       },
+    { icon: '🤝', title: 'Brand Deals',      badge: null,   desc: 'Connect with sponsors & advertisers'    },
+  ],
+  footer: [
+    { icon: '🎬', label: 'Become a Creator',    href: '/creator'       },
+    { icon: '📖', label: 'Creator Docs',         href: '/creator/docs'  },
+    { icon: '💬', label: 'Creator Community',    href: '/community'     },
+  ],
 };
+
+const RESOURCES_MENU = {
+  heading: 'Resources',
+  cols: [
+    {
+      label: 'LEARN',
+      items: [
+        { icon: '📚', title: 'Blog',           desc: 'Articles, news & entertainment guides', href: '/blog'       },
+        { icon: '❓', title: 'Help Center',    desc: 'FAQs and support documentation',        href: '/help'       },
+        { icon: '🗺️', title: 'Roadmap',        desc: 'See what we\'re building next',         href: '/roadmap'    },
+        { icon: '📣', title: 'Changelog',      desc: 'Latest updates and releases',           href: '/changelog'  },
+      ],
+    },
+  ],
+  whatsNew: [
+    { icon: '🎙️', title: 'EntertainZen Podcast', badge: 'New', desc: 'Weekly entertainment deep-dives'       },
+    { icon: '📰', title: 'Newsletter',            badge: null,  desc: 'Weekly picks straight to your inbox'  },
+  ],
+  footer: [
+    { icon: '📖', label: 'Read the blog',       href: '/blog'      },
+    { icon: '🆘', label: 'Get support',          href: '/help'      },
+  ],
+};
+
+type MenuData = typeof BROWSE_MENU;
 
 @customElement('app-header')
 export class AppHeader extends LitElement {
   static styles = css`
-    /* ── Host ─────────────────────────────────────────────── */
+    /* ── Reset & host ─────────────────────────────────────── */
     :host {
       display: block;
       position: sticky;
       top: 0;
       z-index: 1000;
-      background: #ffffff;
-      border-bottom: 1px solid #e8e8e8;
+      background: #fff;
+      border-bottom: 1px solid #e5e5e5;
     }
 
-    /* ── Wrapper ──────────────────────────────────────────── */
+    /* ── Navbar row ───────────────────────────────────────── */
     .navbar {
       display: flex;
       align-items: center;
       max-width: 1280px;
       margin: 0 auto;
       padding: 0 24px;
-      height: 64px;
+      height: 60px;
       gap: 0;
     }
 
@@ -100,24 +130,23 @@ export class AppHeader extends LitElement {
     .logo {
       display: flex;
       flex-direction: column;
-      align-items: flex-start;
       text-decoration: none;
-      margin-right: 32px;
+      margin-right: 36px;
       flex-shrink: 0;
+      line-height: 1;
     }
     .logo-name {
       font-family: 'Poppins', sans-serif;
-      font-size: 1.25rem;
+      font-size: 1.15rem;
       font-weight: 800;
-      color: #1a1a1a;
-      line-height: 1;
-      letter-spacing: -0.5px;
+      color: #111;
+      letter-spacing: -0.4px;
     }
-    .logo-sub {
-      font-size: 0.6rem;
+    .logo-domain {
+      font-size: 0.58rem;
+      color: #999;
       font-weight: 500;
-      color: #888;
-      letter-spacing: 0.3px;
+      letter-spacing: 0.2px;
       margin-top: 1px;
     }
 
@@ -125,222 +154,297 @@ export class AppHeader extends LitElement {
     .nav-center {
       display: flex;
       align-items: center;
-      gap: 2px;
+      gap: 0;
       flex: 1;
     }
 
-    /* nav trigger button */
+    /* nav item wrapper — controls dropdown visibility */
     .nav-item {
-      position: relative;
+      position: static; /* dropdown is full-width, positioned on :host */
     }
+
+    /* trigger button / link */
     .nav-trigger {
-      display: flex;
+      display: inline-flex;
       align-items: center;
-      gap: 5px;
-      padding: 8px 14px;
-      font-size: 0.9rem;
+      gap: 4px;
+      padding: 8px 12px;
+      font-size: 0.875rem;
       font-weight: 500;
-      color: #1a1a1a;
+      color: #111;
       background: none;
       border: none;
-      border-radius: 8px;
       cursor: pointer;
-      transition: background 0.15s;
-      white-space: nowrap;
       text-decoration: none;
+      border-bottom: 2px solid transparent;
+      transition: color .15s, border-color .15s;
+      white-space: nowrap;
+      height: 60px;
     }
     .nav-trigger:hover,
-    .nav-item:hover .nav-trigger {
-      background: #f5f5f5;
+    .nav-item:hover > .nav-trigger {
+      color: #ff4f00;           /* Zapier-style orange accent */
+      border-bottom-color: #ff4f00;
     }
+
+    /* chevron */
     .nav-trigger svg {
-      width: 14px;
-      height: 14px;
+      width: 13px;
+      height: 13px;
       color: #666;
-      transition: transform 0.2s;
+      transition: transform .2s;
       flex-shrink: 0;
     }
-    .nav-item:hover .nav-trigger svg {
+    .nav-item:hover > .nav-trigger svg {
       transform: rotate(180deg);
+      color: #ff4f00;
     }
 
-    /* external-link icon (↗) */
-    .ext-icon {
-      font-size: 0.75rem;
-      color: #888;
-      margin-left: 2px;
+    /* plain link (no dropdown) */
+    .nav-plain {
+      display: inline-flex;
+      align-items: center;
+      padding: 8px 12px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: #111;
+      text-decoration: none;
+      border-bottom: 2px solid transparent;
+      height: 60px;
+      transition: color .15s, border-color .15s;
+      white-space: nowrap;
+    }
+    .nav-plain:hover {
+      color: #ff4f00;
+      border-bottom-color: #ff4f00;
     }
 
-    /* ── Mega-menu panel ──────────────────────────────────── */
+    /* ── MEGA DROPDOWN ────────────────────────────────────── */
     .mega {
       display: none;
-      position: absolute;
-      top: calc(100% + 8px);
+      position: fixed;          /* full-width across viewport */
+      top: 60px;
       left: 0;
-      background: #ffffff;
-      border: 1px solid #e8e8e8;
-      border-radius: 16px;
-      box-shadow: 0 8px 40px rgba(0,0,0,.12);
-      padding: 28px;
-      gap: 32px;
-      min-width: 680px;
-      z-index: 2000;
-      animation: fadeDown .18s ease;
-    }
-    .mega.has-promo {
-      display: none; /* toggled by hover */
+      right: 0;
+      background: #fff;
+      border-top: 1px solid #e5e5e5;
+      border-bottom: 1px solid #e5e5e5;
+      box-shadow: 0 8px 24px rgba(0,0,0,.10);
+      z-index: 999;
+      /* NO border-radius — flat Zapier style */
     }
     .nav-item:hover .mega {
-      display: flex;
+      display: block;
     }
 
-    @keyframes fadeDown {
-      from { opacity:0; transform:translateY(-6px); }
-      to   { opacity:1; transform:translateY(0);    }
+    /* inner layout */
+    .mega-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 32px 24px 0;
+      display: flex;
+      gap: 0;
     }
 
-    /* columns */
-    .mega-cols {
-      display: flex;
-      gap: 32px;
+    /* left: columns area */
+    .mega-left {
       flex: 1;
+      display: flex;
+      gap: 48px;
+      padding-right: 32px;
+      border-right: 1px solid #ebebeb;
     }
-    .mega-col h4 {
-      font-size: 0.7rem;
+
+    /* column */
+    .mega-col-label {
+      font-size: 0.68rem;
       font-weight: 700;
       color: #999;
       text-transform: uppercase;
       letter-spacing: 0.8px;
-      margin-bottom: 12px;
-    }
-    .mega-col ul {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-    .mega-col ul li a {
-      display: block;
-      padding: 6px 10px;
-      font-size: 0.875rem;
-      color: #333;
-      border-radius: 8px;
-      text-decoration: none;
-      transition: background 0.12s, color 0.12s;
-      white-space: nowrap;
-    }
-    .mega-col ul li a:hover {
-      background: #f0f0ff;
-      color: #6366f1;
-    }
-
-    /* promo card */
-    .mega-promo {
-      width: 220px;
-      flex-shrink: 0;
-      border-radius: 14px;
-      padding: 20px;
-      color: #fff;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      min-height: 180px;
-    }
-    .promo-tag {
-      font-size: 0.65rem;
-      font-weight: 700;
-      letter-spacing: 1px;
-      background: rgba(255,255,255,.25);
-      border-radius: 4px;
-      padding: 2px 7px;
-      display: inline-block;
-      margin-bottom: 10px;
-    }
-    .promo-title {
-      font-family: 'Poppins', sans-serif;
-      font-size: 1.05rem;
-      font-weight: 700;
-      line-height: 1.3;
-      margin-bottom: 8px;
-    }
-    .promo-body {
-      font-size: 0.78rem;
-      opacity: .88;
-      line-height: 1.5;
       margin-bottom: 16px;
     }
-    .promo-cta {
-      display: inline-block;
-      background: #fff;
-      color: #6366f1;
-      font-size: 0.8rem;
-      font-weight: 700;
-      padding: 8px 16px;
-      border-radius: 8px;
-      text-decoration: none;
-      transition: opacity .15s;
-      align-self: flex-start;
+    .mega-col-items {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      min-width: 220px;
     }
-    .promo-cta:hover { opacity: .88; }
+
+    /* item row */
+    .mega-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 10px 12px;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background .12s;
+    }
+    .mega-item:hover { background: #f7f7f7; }
+    .mega-item-icon {
+      font-size: 1.2rem;
+      flex-shrink: 0;
+      margin-top: 1px;
+      width: 24px;
+      text-align: center;
+    }
+    .mega-item-text {}
+    .mega-item-title {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: #111;
+      display: block;
+      line-height: 1.3;
+    }
+    .mega-item-desc {
+      font-size: 0.78rem;
+      color: #666;
+      display: block;
+      margin-top: 1px;
+      line-height: 1.4;
+    }
+
+    /* right: What's New panel */
+    .mega-right {
+      width: 280px;
+      flex-shrink: 0;
+      padding-left: 32px;
+    }
+    .whats-new-label {
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: #999;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-bottom: 16px;
+    }
+    .wn-items {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .wn-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 8px 10px;
+      border-radius: 6px;
+      cursor: default;
+      transition: background .12s;
+    }
+    .wn-item:hover { background: #f7f7f7; }
+    .wn-icon {
+      font-size: 1.1rem;
+      flex-shrink: 0;
+      width: 22px;
+      text-align: center;
+      margin-top: 1px;
+    }
+    .wn-body {}
+    .wn-title-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .wn-title {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #111;
+    }
+    .wn-badge {
+      font-size: 0.6rem;
+      font-weight: 700;
+      padding: 1px 6px;
+      border-radius: 3px;
+      background: #fff3e0;
+      color: #e65100;
+      letter-spacing: 0.3px;
+    }
+    .wn-badge.beta {
+      background: #e8f5e9;
+      color: #2e7d32;
+    }
+    .wn-desc {
+      font-size: 0.76rem;
+      color: #777;
+      margin-top: 1px;
+      line-height: 1.4;
+    }
+
+    /* mega footer strip */
+    .mega-footer {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 14px 24px;
+      display: flex;
+      gap: 28px;
+      border-top: 1px solid #ebebeb;
+      margin-top: 24px;
+    }
+    .mega-footer-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: #444;
+      text-decoration: none;
+      transition: color .12s;
+    }
+    .mega-footer-link:hover { color: #ff4f00; }
+    .mega-footer-link span { font-size: 0.9rem; }
 
     /* ── Right side ───────────────────────────────────────── */
     .nav-right {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       margin-left: auto;
       flex-shrink: 0;
     }
 
-    /* Login — outline pill */
+    /* Log In — outline pill */
     .btn-login {
-      padding: 8px 22px;
-      font-size: 0.875rem;
+      padding: 7px 20px;
+      font-size: 0.85rem;
       font-weight: 600;
-      color: #1a1a1a;
+      color: #111;
       background: transparent;
-      border: 1.5px solid #c8c8c8;
+      border: 1.5px solid #bbb;
       border-radius: 999px;
       cursor: pointer;
       text-decoration: none;
       transition: border-color .15s, background .15s;
       white-space: nowrap;
     }
-    .btn-login:hover {
-      border-color: #1a1a1a;
-      background: #f5f5f5;
-    }
+    .btn-login:hover { border-color: #111; background: #f5f5f5; }
 
     /* Sign Up — filled black pill */
     .btn-signup {
-      padding: 8px 22px;
-      font-size: 0.875rem;
+      padding: 7px 20px;
+      font-size: 0.85rem;
       font-weight: 600;
-      color: #ffffff;
-      background: #1a1a1a;
-      border: 1.5px solid #1a1a1a;
+      color: #fff;
+      background: #111;
+      border: 1.5px solid #111;
       border-radius: 999px;
       cursor: pointer;
       text-decoration: none;
-      transition: background .15s, border-color .15s;
+      transition: background .15s;
       white-space: nowrap;
     }
-    .btn-signup:hover {
-      background: #333;
-      border-color: #333;
-    }
+    .btn-signup:hover { background: #333; border-color: #333; }
 
-    /* Avatar (logged-in) */
+    /* Avatar */
     .avatar {
-      width: 36px;
-      height: 36px;
+      width: 34px;
+      height: 34px;
       border-radius: 50%;
       background: #6366f1;
       color: #fff;
       font-weight: 700;
-      font-size: 0.875rem;
+      font-size: 0.85rem;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -348,7 +452,7 @@ export class AppHeader extends LitElement {
       flex-shrink: 0;
     }
 
-    /* ── Mobile ───────────────────────────────────────────── */
+    /* ── Mobile hide ──────────────────────────────────────── */
     @media (max-width: 900px) {
       .nav-center { display: none; }
       .mega       { display: none !important; }
@@ -360,41 +464,71 @@ export class AppHeader extends LitElement {
 
   /* chevron SVG */
   private chevron() {
-    return html`
-      <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-        <path fill-rule="evenodd"
-          d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
-          clip-rule="evenodd"/>
-      </svg>`;
+    return html`<svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+      <path fill-rule="evenodd"
+        d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+        clip-rule="evenodd"/>
+    </svg>`;
   }
 
-  /* render one mega-menu */
-  private renderMega(menu: typeof BROWSE_MENU) {
+  /* render a full mega panel */
+  private renderMega(menu: MenuData) {
     return html`
-      <div class="mega ${menu.promo ? 'has-promo' : ''}">
-        <div class="mega-cols">
-          ${menu.cols.map(col => html`
-            <div class="mega-col">
-              <h4>${col.heading}</h4>
-              <ul>
-                ${col.items.map(item => html`
-                  <li><a href="${item.href}">${item.label}</a></li>
-                `)}
-              </ul>
+      <div class="mega">
+        <div class="mega-inner">
+
+          <!-- Left: columns -->
+          <div class="mega-left">
+            ${menu.cols.map(col => html`
+              <div>
+                <p class="mega-col-label">${col.label}</p>
+                <div class="mega-col-items">
+                  ${col.items.map(item => html`
+                    <a href="${item.href}" class="mega-item">
+                      <span class="mega-item-icon">${item.icon}</span>
+                      <span class="mega-item-text">
+                        <span class="mega-item-title">${item.title}</span>
+                        <span class="mega-item-desc">${item.desc}</span>
+                      </span>
+                    </a>
+                  `)}
+                </div>
+              </div>
+            `)}
+          </div>
+
+          <!-- Right: What's New -->
+          <div class="mega-right">
+            <p class="whats-new-label">WHAT'S NEW</p>
+            <div class="wn-items">
+              ${menu.whatsNew.map(w => html`
+                <div class="wn-item">
+                  <span class="wn-icon">${w.icon}</span>
+                  <div class="wn-body">
+                    <div class="wn-title-row">
+                      <span class="wn-title">${w.title}</span>
+                      ${w.badge ? html`
+                        <span class="wn-badge ${w.badge.toLowerCase() === 'beta' ? 'beta' : ''}">
+                          ${w.badge}
+                        </span>` : ''}
+                    </div>
+                    <span class="wn-desc">${w.desc}</span>
+                  </div>
+                </div>
+              `)}
             </div>
-          `)}
+          </div>
+
         </div>
 
-        ${menu.promo ? html`
-          <div class="mega-promo" style="background:${menu.promo.bg}">
-            <div>
-              <span class="promo-tag">${menu.promo.tag}</span>
-              <p class="promo-title">${menu.promo.title}</p>
-              <p class="promo-body">${menu.promo.body}</p>
-            </div>
-            <a href="${menu.promo.href}" class="promo-cta">${menu.promo.cta}</a>
-          </div>
-        ` : ''}
+        <!-- Footer strip -->
+        <div class="mega-footer">
+          ${menu.footer.map(f => html`
+            <a href="${f.href}" class="mega-footer-link">
+              <span>${f.icon}</span>${f.label}
+            </a>
+          `)}
+        </div>
       </div>
     `;
   }
@@ -406,50 +540,46 @@ export class AppHeader extends LitElement {
     return html`
       <nav class="navbar">
 
-        <!-- ── Logo ── -->
+        <!-- Logo -->
         <a href="/" class="logo">
           <span class="logo-name">EntertainingHub</span>
-          <span class="logo-sub">entertainingzen.com</span>
+          <span class="logo-domain">entertainingzen.com</span>
         </a>
 
-        <!-- ── Center nav ── -->
+        <!-- Center nav -->
         <div class="nav-center">
 
-          <!-- Browse (mega) -->
+          <!-- Browse -->
           <div class="nav-item">
-            <button class="nav-trigger">
-              Browse ${this.chevron()}
-            </button>
+            <button class="nav-trigger">Browse ${this.chevron()}</button>
             ${this.renderMega(BROWSE_MENU)}
           </div>
 
-          <!-- Pricing (plain link) -->
-          <a href="/pricing" class="nav-trigger">Pricing</a>
-
-          <!-- Creators (mega) -->
+          <!-- Creators -->
           <div class="nav-item">
-            <button class="nav-trigger">
-              Creators ${this.chevron()}
-            </button>
+            <button class="nav-trigger">Creators ${this.chevron()}</button>
             ${this.renderMega(CREATORS_MENU)}
           </div>
 
-          <!-- Enterprise (external-style) -->
-          <a href="/enterprise" class="nav-trigger">
-            Enterprise <span class="ext-icon">↗</span>
-          </a>
+          <!-- Resources -->
+          <div class="nav-item">
+            <button class="nav-trigger">Resources ${this.chevron()}</button>
+            ${this.renderMega(RESOURCES_MENU)}
+          </div>
+
+          <!-- Plain links -->
+          <a href="/enterprise" class="nav-plain">Enterprise</a>
+          <a href="/pricing"    class="nav-plain">Pricing</a>
 
         </div>
 
-        <!-- ── Right side ── -->
+        <!-- Right side -->
         <div class="nav-right">
           ${isAuth ? html`
             <a href="/profile" class="avatar" title="${user?.username}">
               ${user?.username?.charAt(0).toUpperCase() ?? 'U'}
             </a>
-            <button class="btn-login" @click=${() => authService.logout()}>
-              Log Out
-            </button>
+            <button class="btn-login" @click=${() => authService.logout()}>Log Out</button>
           ` : html`
             <a href="/login"    class="btn-login">Log In</a>
             <a href="/register" class="btn-signup">Sign Up</a>
