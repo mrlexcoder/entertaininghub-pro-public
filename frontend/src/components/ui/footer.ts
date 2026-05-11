@@ -29,22 +29,22 @@ export class AppFooter extends LitElement {
     /* Brand column */
     .brand-col .logo-name {
       font-family: 'Poppins', sans-serif;
-      font-size: 1.1rem;
+      font-size: 1.25rem;        /* 20px */
       font-weight: 800;
       color: #1a1a1a;
       display: block;
       margin-bottom: 4px;
     }
     .brand-col .logo-sub {
-      font-size: 0.7rem;
+      font-size: 0.8125rem;      /* 13px */
       color: #999;
       display: block;
       margin-bottom: 16px;
     }
     .brand-col p {
-      font-size: 0.82rem;
+      font-size: 0.9375rem;      /* 15px */
       color: #666;
-      line-height: 1.6;
+      line-height: 1.65;
       margin-bottom: 20px;
     }
 
@@ -75,12 +75,12 @@ export class AppFooter extends LitElement {
 
     /* Link columns */
     .link-col h4 {
-      font-size: 0.75rem;
+      font-size: 0.875rem;       /* 14px */
       font-weight: 700;
       color: #1a1a1a;
       text-transform: uppercase;
-      letter-spacing: 0.7px;
-      margin-bottom: 14px;
+      letter-spacing: 0.5px;
+      margin-bottom: 16px;
     }
     .link-col ul {
       list-style: none;
@@ -88,10 +88,10 @@ export class AppFooter extends LitElement {
       padding: 0;
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 10px;
     }
     .link-col ul li a {
-      font-size: 0.875rem;
+      font-size: 0.9375rem;      /* 15px */
       color: #555;
       text-decoration: none;
       transition: color .15s;
@@ -108,7 +108,7 @@ export class AppFooter extends LitElement {
       gap: 12px;
     }
     .footer-bottom p {
-      font-size: 0.8rem;
+      font-size: 0.875rem;       /* 14px */
       color: #999;
       margin: 0;
     }
@@ -117,7 +117,7 @@ export class AppFooter extends LitElement {
       gap: 20px;
     }
     .bottom-links a {
-      font-size: 0.8rem;
+      font-size: 0.875rem;       /* 14px */
       color: #999;
       text-decoration: none;
       transition: color .15s;

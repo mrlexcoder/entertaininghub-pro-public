@@ -71,13 +71,13 @@ export class ContentCard extends LitElement {
 
     /* Info */
     .info {
-      padding: 12px;
+      padding: 14px;
     }
     .title {
-      font-size: 0.875rem;
+      font-size: 1rem;           /* 16px — Google minimum for readable text */
       font-weight: 600;
       color: #0f172a;
-      margin: 0 0 6px;
+      margin: 0 0 8px;
       display: -webkit-box;
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
@@ -88,7 +88,7 @@ export class ContentCard extends LitElement {
       display: flex;
       align-items: center;
       gap: 8px;
-      font-size: 0.75rem;
+      font-size: 0.875rem;       /* 14px */
       color: #64748b;
       flex-wrap: wrap;
     }
@@ -112,10 +112,10 @@ export class ContentCard extends LitElement {
       margin-top: 8px;
     }
     .genre-tag {
-      padding: 2px 8px;
+      padding: 3px 10px;
       background: #f1f5f9;
       border-radius: 999px;
-      font-size: 0.68rem;
+      font-size: 0.8125rem;      /* 13px */
       color: #475569;
       font-weight: 500;
     }

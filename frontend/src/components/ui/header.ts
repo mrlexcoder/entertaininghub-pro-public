@@ -199,7 +199,7 @@ export class AppHeader extends LitElement {
       height: 100%;
     }
 
-    /* ── Nav trigger button ───────────────────────────────── */
+    /* trigger button */
     .nav-trigger {
       display: inline-flex;
       align-items: center;
@@ -207,7 +207,7 @@ export class AppHeader extends LitElement {
       padding: 0 14px;
       height: 64px;
       font-family: var(--font);
-      font-size: 15px;
+      font-size: 22px;           /* ← main nav 22px */
       font-weight: 500;
       color: #1a1a1a;
       background: none;
@@ -246,7 +246,7 @@ export class AppHeader extends LitElement {
       padding: 0 14px;
       height: 64px;
       font-family: var(--font);
-      font-size: 15px;
+      font-size: 22px;           /* ← main nav 22px */
       font-weight: 500;
       color: #1a1a1a;
       text-decoration: none;
@@ -295,14 +295,14 @@ export class AppHeader extends LitElement {
 
     .mega-col { min-width: 130px; }
 
-    /* heading — bold, ~12px, dark, no uppercase */
+    /* heading — 19px bold */
     .mega-col-heading {
       display: block;
       font-family: var(--font);
-      font-size: 12px;
+      font-size: 19px;           /* ← submenu heading 19px */
       font-weight: 700;
       color: #1a1a1a;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
       line-height: 1.3;
     }
 
@@ -313,9 +313,9 @@ export class AppHeader extends LitElement {
     }
     .mega-col-list li a {
       display: block;
-      padding: 4px 0;
+      padding: 5px 0;
       font-family: var(--font);
-      font-size: 14px;
+      font-size: 17px;           /* ← submenu links 17px */
       font-weight: 400;
       color: #333;
       text-decoration: none;
@@ -359,11 +359,10 @@ export class AppHeader extends LitElement {
       letter-spacing: -0.5px;
     }
 
-    /* text below the image — like Semrush */
     .promo-tagline {
       display: block;
       font-family: var(--font);
-      font-size: 11px;
+      font-size: 13px;
       font-weight: 700;
       color: #1a1a1a;
       letter-spacing: 0.2px;
@@ -371,10 +370,10 @@ export class AppHeader extends LitElement {
     }
     .promo-body {
       font-family: var(--font);
-      font-size: 13px;
+      font-size: 17px;           /* ← matches submenu link size */
       font-weight: 400;
       color: #444;
-      line-height: 1.5;
+      line-height: 1.55;
       margin: 0;
     }
 
