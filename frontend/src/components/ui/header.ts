@@ -49,12 +49,10 @@ const BROWSE_MENU = {
     },
   ],
   promo: {
-    bg:   'linear-gradient(160deg,#7c3aed 0%,#a855f7 55%,#c084fc 100%)',
-    tag:  'TRY PREMIUM FOR FREE',
-    title:'EntertainingHub\nPremium',
-    body: 'The platform that unifies all entertainment with AI-powered recommendations.',
-    cta:  'Get Started Free',
-    href: '/register',
+    bg:       'linear-gradient(160deg,#7c3aed 0%,#a855f7 55%,#c084fc 100%)',
+    imgText:  'EntertainingHub\nPremium✦',
+    tagline:  'TRY PREMIUM FOR FREE',
+    body:     'The platform that unifies all entertainment with AI-powered recommendations.',
   },
 };
 
@@ -90,12 +88,10 @@ const CREATORS_MENU = {
     },
   ],
   promo: {
-    bg:   'linear-gradient(160deg,#0f172a 0%,#1e3a5f 55%,#0369a1 100%)',
-    tag:  'FOR CREATORS',
-    title:'EntertainingHub\nCreator Hub',
-    body: '60/40 revenue split. Real-time analytics. Grow your audience on entertainingzen.com.',
-    cta:  'Become a Creator',
-    href: '/creator',
+    bg:       'linear-gradient(160deg,#0f172a 0%,#1e3a5f 55%,#0369a1 100%)',
+    imgText:  'EntertainingHub\nCreator Hub',
+    tagline:  'FOR CREATORS',
+    body:     '60/40 revenue split. Real-time analytics. Grow your audience.',
   },
 };
 
@@ -122,12 +118,10 @@ const RESOURCES_MENU = {
     },
   ],
   promo: {
-    bg:   'linear-gradient(160deg,#064e3b 0%,#065f46 55%,#10b981 100%)',
-    tag:  'WEEKLY NEWSLETTER',
-    title:'EntertainingHub\nInsider',
-    body: 'Weekly picks, creator spotlights and platform updates straight to your inbox.',
-    cta:  'Subscribe Free',
-    href: '/newsletter',
+    bg:       'linear-gradient(160deg,#064e3b 0%,#065f46 55%,#10b981 100%)',
+    imgText:  'EntertainingHub\nInsider',
+    tagline:  'WEEKLY NEWSLETTER',
+    body:     'Weekly picks, creator spotlights and platform updates.',
   },
 };
 
@@ -148,10 +142,11 @@ export class AppHeader extends LitElement {
       top: 0;
       z-index: 1000;
       background: #fff;
+      /* bottom border only shows when no dropdown open */
       border-bottom: 1px solid #e2e2e2;
     }
 
-    /* ── Navbar — 3-column: logo | center-nav | buttons ───── */
+    /* ── Navbar — 3-col grid: logo | center | buttons ─────── */
     .navbar {
       display: grid;
       grid-template-columns: auto 1fr auto;
@@ -159,7 +154,7 @@ export class AppHeader extends LitElement {
       max-width: 1440px;
       margin: 0 auto;
       padding: 0 28px;
-      height: 68px;
+      height: 64px;
       font-family: var(--font);
     }
 
@@ -170,7 +165,6 @@ export class AppHeader extends LitElement {
       text-decoration: none;
       line-height: 1;
       gap: 3px;
-      margin-right: 0;
     }
     .logo-name {
       font-size: 18px;
@@ -180,22 +174,20 @@ export class AppHeader extends LitElement {
       font-family: var(--font);
     }
     .logo-sub {
-      font-size: 10.5px;
+      font-size: 10px;
       font-weight: 400;
       color: #888;
       font-family: var(--font);
     }
 
-    /* ── Center nav — truly centered in the middle column ─── */
+    /* ── Center nav — truly centered ─────────────────────── */
     .nav-center {
       display: flex;
       align-items: center;
-      justify-content: center;   /* ← CENTER */
+      justify-content: center;
       height: 100%;
-      gap: 0;
     }
 
-    /* nav item wrapper */
     .nav-item {
       position: static;
       display: flex;
@@ -203,33 +195,40 @@ export class AppHeader extends LitElement {
       height: 100%;
     }
 
-    /* trigger button */
+    /* ── Nav trigger button ───────────────────────────────── */
     .nav-trigger {
       display: inline-flex;
       align-items: center;
       gap: 4px;
       padding: 0 14px;
-      height: 68px;
+      height: 64px;
       font-family: var(--font);
       font-size: 15px;
       font-weight: 500;
       color: #1a1a1a;
       background: none;
       border: none;
-      border-bottom: 2px solid transparent;
+      /* underline lives on the text span, not the button */
       cursor: pointer;
       white-space: nowrap;
       line-height: 1;
+    }
+
+    /* text span inside trigger — gets the underline */
+    .trigger-text {
+      border-bottom: 2px solid transparent;
+      padding-bottom: 1px;
       transition: border-color 0.15s;
     }
-    .nav-trigger:hover { border-bottom-color: #1a1a1a; }
-    /* open state */
-    .nav-item.open > .nav-trigger { border-bottom-color: #1a1a1a; }
+    /* hover: show underline */
+    .nav-trigger:hover .trigger-text { border-bottom-color: #1a1a1a; }
+    /* open: show underline */
+    .nav-item.open .trigger-text { border-bottom-color: #1a1a1a; }
 
     /* chevron */
     .chevron {
-      width: 12px;
-      height: 12px;
+      width: 11px;
+      height: 11px;
       color: #555;
       flex-shrink: 0;
       transition: transform 0.2s;
@@ -241,61 +240,67 @@ export class AppHeader extends LitElement {
       display: inline-flex;
       align-items: center;
       padding: 0 14px;
-      height: 68px;
+      height: 64px;
       font-family: var(--font);
       font-size: 15px;
       font-weight: 500;
       color: #1a1a1a;
       text-decoration: none;
-      border-bottom: 2px solid transparent;
       white-space: nowrap;
+    }
+    .nav-plain span {
+      border-bottom: 2px solid transparent;
+      padding-bottom: 1px;
       transition: border-color 0.15s;
     }
-    .nav-plain:hover { border-bottom-color: #1a1a1a; }
+    .nav-plain:hover span { border-bottom-color: #1a1a1a; }
 
-    /* ── MEGA DROPDOWN — full width, NO border-radius ─────── */
+    /* ── MEGA DROPDOWN ────────────────────────────────────── */
+    /* Flush against navbar — no gap, no border-radius */
     .mega {
       display: none;
       position: fixed;
-      top: 68px;
+      top: 64px;          /* exactly navbar height — no gap */
       left: 0;
       right: 0;
       background: #fff;
       border-top: 1px solid #e2e2e2;
-      box-shadow: 0 6px 24px rgba(0,0,0,.09);
+      border-bottom: 1px solid #e2e2e2;
+      box-shadow: 0 8px 24px rgba(0,0,0,.10);
       z-index: 999;
     }
-    /* show when parent has .open */
     .nav-item.open .mega { display: block; }
 
+    /* inner */
     .mega-inner {
       max-width: 1440px;
       margin: 0 auto;
-      padding: 32px 28px 28px;
+      padding: 28px 28px 24px;
       display: flex;
       align-items: flex-start;
       font-family: var(--font);
     }
 
-    /* columns */
+    /* ── Columns ──────────────────────────────────────────── */
     .mega-cols {
       flex: 1;
       display: flex;
       gap: 48px;
       padding-right: 40px;
-      border-right: 1px solid #e8e8e8;
+      border-right: 1px solid #ebebeb;
     }
 
-    .mega-col { min-width: 140px; }
+    .mega-col { min-width: 130px; }
 
+    /* heading — bold, ~12px, dark, no uppercase */
     .mega-col-heading {
       display: block;
+      font-family: var(--font);
       font-size: 12px;
       font-weight: 700;
       color: #1a1a1a;
-      margin-bottom: 14px;
+      margin-bottom: 12px;
       line-height: 1.3;
-      font-family: var(--font);
     }
 
     .mega-col-list {
@@ -305,94 +310,89 @@ export class AppHeader extends LitElement {
     }
     .mega-col-list li a {
       display: block;
-      padding: 5px 0;
+      padding: 4px 0;
+      font-family: var(--font);
       font-size: 14px;
       font-weight: 400;
       color: #333;
       text-decoration: none;
       line-height: 1.5;
       white-space: nowrap;
-      font-family: var(--font);
-      transition: color 0.12s;
+      transition: color 0.1s;
     }
+    /* hover = underline only, no bg */
     .mega-col-list li a:hover {
       color: #1a1a1a;
       text-decoration: underline;
       text-underline-offset: 2px;
     }
 
-    /* promo card */
+    /* ── Promo panel — Semrush style: image box + text below ─ */
     .mega-promo {
-      width: 250px;
+      width: 240px;
       flex-shrink: 0;
       padding-left: 40px;
     }
-    .promo-card {
-      border-radius: 12px;
-      padding: 22px 20px 20px;
-      color: #fff;
+
+    /* the coloured box (like Semrush's purple image) */
+    .promo-img {
+      width: 100%;
+      height: 180px;
+      border-radius: 8px;
       display: flex;
-      flex-direction: column;
-      min-height: 210px;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      margin-bottom: 14px;
     }
-    .promo-tag {
-      display: block;
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 0.7px;
-      color: rgba(255,255,255,.75);
-      margin-bottom: 8px;
-      text-transform: uppercase;
+    .promo-img-text {
       font-family: var(--font);
-    }
-    .promo-title {
-      font-size: 20px;
-      font-weight: 800;
-      line-height: 1.2;
+      font-size: 22px;
+      font-weight: 900;
       color: #fff;
-      margin: 0 0 10px;
+      line-height: 1.15;
       white-space: pre-line;
+      text-align: center;
+      letter-spacing: -0.5px;
+    }
+
+    /* text below the image — like Semrush */
+    .promo-tagline {
+      display: block;
       font-family: var(--font);
+      font-size: 11px;
+      font-weight: 700;
+      color: #1a1a1a;
+      letter-spacing: 0.2px;
+      margin-bottom: 6px;
     }
     .promo-body {
+      font-family: var(--font);
       font-size: 13px;
-      line-height: 1.55;
-      color: rgba(255,255,255,.85);
-      margin: 0 0 18px;
-      flex: 1;
-      font-family: var(--font);
+      font-weight: 400;
+      color: #444;
+      line-height: 1.5;
+      margin: 0;
     }
-    .promo-cta {
-      display: inline-block;
-      align-self: flex-start;
-      background: #fff;
-      color: #1a1a1a;
-      font-size: 12.5px;
-      font-weight: 700;
-      padding: 8px 16px;
-      border-radius: 6px;
-      text-decoration: none;
-      font-family: var(--font);
-      transition: opacity 0.15s;
-    }
-    .promo-cta:hover { opacity: .88; }
 
-    /* ── Backdrop — click outside to close ───────────────── */
+    /* ── Backdrop ─────────────────────────────────────────── */
     .backdrop {
       display: none;
       position: fixed;
-      inset: 68px 0 0 0;
+      inset: 64px 0 0 0;
       z-index: 998;
+      background: transparent;
     }
-    .backdrop.visible { display: block; }
+    .backdrop.on { display: block; }
 
-    /* ── Right: Log In / Sign Up ──────────────────────────── */
+    /* ── Right: buttons ───────────────────────────────────── */
     .nav-right {
       display: flex;
       align-items: center;
       gap: 10px;
     }
 
+    /* Log In — outline pill */
     .btn-login {
       display: inline-flex;
       align-items: center;
@@ -413,6 +413,7 @@ export class AppHeader extends LitElement {
     }
     .btn-login:hover { border-color: #1a1a1a; background: #f5f5f5; }
 
+    /* Sign Up — filled black pill */
     .btn-signup {
       display: inline-flex;
       align-items: center;
@@ -433,6 +434,7 @@ export class AppHeader extends LitElement {
     }
     .btn-signup:hover { background: #333; border-color: #333; }
 
+    /* Avatar */
     .avatar {
       width: 34px;
       height: 34px;
@@ -460,7 +462,6 @@ export class AppHeader extends LitElement {
   @consume({ context: authContext, subscribe: true })
   @state() private authState?: AuthState;
 
-  /* which menu is open: 'browse' | 'creators' | 'resources' | null */
   @state() private openMenu: string | null = null;
 
   private toggle(name: string) {
@@ -484,6 +485,7 @@ export class AppHeader extends LitElement {
     return html`
       <div class="mega">
         <div class="mega-inner">
+
           <!-- Columns -->
           <div class="mega-cols">
             ${menu.cols.map(col => html`
@@ -501,18 +503,16 @@ export class AppHeader extends LitElement {
               </div>
             `)}
           </div>
-          <!-- Promo -->
+
+          <!-- Promo — image box + text below (Semrush style) -->
           <div class="mega-promo">
-            <div class="promo-card" style="background:${menu.promo.bg}">
-              <span class="promo-tag">${menu.promo.tag}</span>
-              <p class="promo-title">${menu.promo.title}</p>
-              <p class="promo-body">${menu.promo.body}</p>
-              <a href="${menu.promo.href}" class="promo-cta"
-                 @click=${() => this.close()}>
-                ${menu.promo.cta}
-              </a>
+            <div class="promo-img" style="background:${menu.promo.bg}">
+              <span class="promo-img-text">${menu.promo.imgText}</span>
             </div>
+            <span class="promo-tagline">${menu.promo.tagline}</span>
+            <p class="promo-body">${menu.promo.body}</p>
           </div>
+
         </div>
       </div>
     `;
@@ -523,8 +523,8 @@ export class AppHeader extends LitElement {
     const user   = this.authState?.user;
 
     return html`
-      <!-- Backdrop — click outside closes menu -->
-      <div class="backdrop ${this.openMenu ? 'visible' : ''}"
+      <!-- Backdrop: click outside to close -->
+      <div class="backdrop ${this.openMenu ? 'on' : ''}"
            @click=${() => this.close()}></div>
 
       <nav class="navbar">
@@ -535,7 +535,7 @@ export class AppHeader extends LitElement {
           <span class="logo-sub">entertainingzen.com</span>
         </a>
 
-        <!-- Center nav — CENTERED via justify-content:center -->
+        <!-- Center nav -->
         <div class="nav-center">
 
           <!-- Browse -->
@@ -543,21 +543,24 @@ export class AppHeader extends LitElement {
             <button class="nav-trigger"
                     @click=${() => this.toggle('browse')}
                     aria-expanded="${this.openMenu === 'browse'}">
-              Browse ${this.chevronSvg()}
+              <span class="trigger-text">Browse</span>
+              ${this.chevronSvg()}
             </button>
             ${this.renderMega(BROWSE_MENU)}
           </div>
 
           <!-- Pricing -->
-          <a href="/pricing" class="nav-plain"
-             @click=${() => this.close()}>Pricing</a>
+          <a href="/pricing" class="nav-plain" @click=${() => this.close()}>
+            <span>Pricing</span>
+          </a>
 
           <!-- Creators -->
           <div class="nav-item ${this.openMenu === 'creators' ? 'open' : ''}">
             <button class="nav-trigger"
                     @click=${() => this.toggle('creators')}
                     aria-expanded="${this.openMenu === 'creators'}">
-              Creators ${this.chevronSvg()}
+              <span class="trigger-text">Creators</span>
+              ${this.chevronSvg()}
             </button>
             ${this.renderMega(CREATORS_MENU)}
           </div>
@@ -567,14 +570,16 @@ export class AppHeader extends LitElement {
             <button class="nav-trigger"
                     @click=${() => this.toggle('resources')}
                     aria-expanded="${this.openMenu === 'resources'}">
-              Resources ${this.chevronSvg()}
+              <span class="trigger-text">Resources</span>
+              ${this.chevronSvg()}
             </button>
             ${this.renderMega(RESOURCES_MENU)}
           </div>
 
           <!-- Enterprise -->
-          <a href="/enterprise" class="nav-plain"
-             @click=${() => this.close()}>Enterprise</a>
+          <a href="/enterprise" class="nav-plain" @click=${() => this.close()}>
+            <span>Enterprise</span>
+          </a>
 
         </div>
 
