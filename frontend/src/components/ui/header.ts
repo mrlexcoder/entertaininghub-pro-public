@@ -193,7 +193,7 @@ export class AppHeader extends LitElement {
     }
 
     .nav-item {
-      position: static;
+      position: relative;   /* anchor dropdown to this item */
       display: flex;
       align-items: center;
       height: 100%;
@@ -259,24 +259,27 @@ export class AppHeader extends LitElement {
     .nav-plain:hover span { border-bottom-color: #1a1a1a; }
 
     /* ── MEGA DROPDOWN ────────────────────────────────────── */
-    /* Flush against navbar — zero gap, no border-radius */
+    /* Width = content only, positioned under the trigger */
     .mega {
       display: none;
-      position: fixed;
+      position: absolute;
       top: 64px;
-      left: 0;
-      right: 0;
+      left: 50%;
+      transform: translateX(-50%);
       background: #fff;
-      border-top: 1px solid #e2e2e2;
-      box-shadow: 0 8px 24px rgba(0,0,0,.10);
+      border: 1px solid #e2e2e2;
+      border-top: none;
+      box-shadow: 0 8px 24px rgba(0,0,0,.12);
       z-index: 999;
+      white-space: nowrap;
+      min-width: max-content;
     }
     .nav-item.open .mega { display: block; }
 
     /* inner */
     .mega-inner {
-      max-width: 1300px;
-      margin: 0 auto;
+      max-width: none;
+      margin: 0;
       padding: 28px 28px 24px;
       display: flex;
       align-items: flex-start;
@@ -286,9 +289,8 @@ export class AppHeader extends LitElement {
     /* ── Columns ──────────────────────────────────────────── */
     .mega-cols {
       flex: 1;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
-      gap: 0;
+      display: flex;
+      gap: 48px;
       padding-right: 40px;
       border-right: 1px solid #ebebeb;
     }
@@ -379,13 +381,13 @@ export class AppHeader extends LitElement {
     /* ── Backdrop ─────────────────────────────────────────── */
     .backdrop {
       position: fixed;
-      inset: 64px 0 0 0;
+      inset: 0;
       z-index: 998;
       background: transparent;
-      pointer-events: none;   /* invisible — doesn't block anything */
+      pointer-events: none;
       display: block;
     }
-    .backdrop.on { pointer-events: all; } /* active — catches outside clicks */
+    .backdrop.on { pointer-events: all; }
 
     /* ── Right: buttons ───────────────────────────────────── */
     .nav-right {
