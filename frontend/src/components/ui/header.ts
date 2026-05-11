@@ -5,30 +5,30 @@ import { authContext, type AuthState } from '../../stores/auth-store';
 import { authService } from '../../services/auth-service';
 
 /* ─────────────────────────────────────────────────────────────
-   Menu data — Semrush style, no icons, plain text columns
+   Menu data  (Semrush column layout — no icons)
 ───────────────────────────────────────────────────────────── */
 const BROWSE_MENU = {
   cols: [
     {
       heading: 'Start Here',
       items: [
-        { label: 'All Content',       href: '/explore'              },
-        { label: 'New Releases',      href: '/explore?sort=new'     },
-        { label: 'Top Rated',         href: '/explore?sort=top'     },
-        { label: 'Free to Watch',     href: '/explore?tier=free'    },
-        { label: 'Trending Now',      href: '/trending'             },
+        { label: 'All Content',         href: '/explore'              },
+        { label: 'New Releases',        href: '/explore?sort=new'     },
+        { label: 'Top Rated',           href: '/explore?sort=top'     },
+        { label: 'Free to Watch',       href: '/explore?tier=free'    },
+        { label: 'Trending Now',        href: '/trending'             },
       ],
     },
     {
-      heading: 'Categories',
+      heading: 'Find the Right Content',
       items: [
-        { label: 'Movies',            href: '/category/movie'       },
-        { label: 'Series',            href: '/category/series'      },
-        { label: 'Anime',             href: '/category/anime'       },
-        { label: 'Anime Movies',      href: '/category/anime-movie' },
-        { label: 'Documentaries',     href: '/category/documentary' },
-        { label: 'Gaming',            href: '/category/gaming'      },
-        { label: '18+ Series',        href: '/category/18plus'      },
+        { label: 'Movies',              href: '/category/movie'       },
+        { label: 'Series',              href: '/category/series'      },
+        { label: 'Anime',               href: '/category/anime'       },
+        { label: 'Anime Movies',        href: '/category/anime-movie' },
+        { label: 'Documentaries',       href: '/category/documentary' },
+        { label: 'Gaming',              href: '/category/gaming'      },
+        { label: '18+ Series',          href: '/category/18plus'      },
       ],
     },
     {
@@ -40,10 +40,19 @@ const BROWSE_MENU = {
         { label: 'Watchlist',           href: '/watchlist'            },
       ],
     },
+    {
+      heading: 'Top Picks',
+      items: [
+        { label: 'Action Movies',       href: '/explore?genre=action'     },
+        { label: 'Thriller Series',     href: '/explore?genre=thriller'   },
+        { label: 'Shonen Anime',        href: '/explore?genre=shonen'     },
+        { label: 'Other content',       href: '/explore'                  },
+      ],
+    },
   ],
   promo: {
-    bg:    'linear-gradient(135deg,#6366f1 0%,#a855f7 60%,#ec4899 100%)',
-    tag:   'TRY PREMIUM FREE',
+    bg:    'linear-gradient(160deg,#7c3aed 0%,#a855f7 55%,#c084fc 100%)',
+    tag:   'TRY PREMIUM FOR FREE',
     title: 'EntertainingHub\nPremium',
     body:  'The platform that unifies all entertainment with AI-powered recommendations.',
     cta:   'Get Started Free',
@@ -56,34 +65,34 @@ const CREATORS_MENU = {
     {
       heading: 'Creator Tools',
       items: [
-        { label: 'Creator Dashboard',  href: '/creator'            },
-        { label: 'Upload Content',     href: '/creator/upload'     },
-        { label: 'Revenue Share',      href: '/creator/revenue'    },
-        { label: 'Analytics',          href: '/creator/analytics'  },
-        { label: 'Creator Blog',       href: '/blog'               },
+        { label: 'Creator Dashboard',   href: '/creator'            },
+        { label: 'Upload Content',      href: '/creator/upload'     },
+        { label: 'Revenue Share',       href: '/creator/revenue'    },
+        { label: 'Analytics',           href: '/creator/analytics'  },
+        { label: 'Creator Blog',        href: '/blog'               },
       ],
     },
     {
       heading: 'Platform',
       items: [
-        { label: 'API Access',         href: '/api-docs'           },
-        { label: 'Integrations',       href: '/integrations'       },
-        { label: 'App Center',         href: '/apps'               },
-        { label: 'Data Sources',       href: '/data-sources'       },
+        { label: 'API Access',          href: '/api-docs'           },
+        { label: 'Integrations',        href: '/integrations'       },
+        { label: 'App Center',          href: '/apps'               },
+        { label: 'Data Sources',        href: '/data-sources'       },
       ],
     },
     {
       heading: 'Top Features',
       items: [
-        { label: 'Stripe Payouts',     href: '/creator/payouts'    },
-        { label: 'Advanced Stats',     href: '/creator/stats'      },
-        { label: 'Brand Deals',        href: '/creator/brands'     },
-        { label: 'Community',          href: '/community'          },
+        { label: 'Stripe Payouts',      href: '/creator/payouts'    },
+        { label: 'Advanced Stats',      href: '/creator/stats'      },
+        { label: 'Brand Deals',         href: '/creator/brands'     },
+        { label: 'Community',           href: '/community'          },
       ],
     },
   ],
   promo: {
-    bg:    'linear-gradient(135deg,#0f172a 0%,#1e3a5f 60%,#0369a1 100%)',
+    bg:    'linear-gradient(160deg,#0f172a 0%,#1e3a5f 55%,#0369a1 100%)',
     tag:   'FOR CREATORS',
     title: 'EntertainingHub\nCreator Hub',
     body:  '60/40 revenue split. Real-time analytics. Grow your audience on entertainingzen.com.',
@@ -97,25 +106,25 @@ const RESOURCES_MENU = {
     {
       heading: 'Learn',
       items: [
-        { label: 'Blog',               href: '/blog'       },
-        { label: 'Help Center',        href: '/help'       },
-        { label: 'Roadmap',            href: '/roadmap'    },
-        { label: 'Changelog',          href: '/changelog'  },
-        { label: 'API Docs',           href: '/api-docs'   },
+        { label: 'Blog',                href: '/blog'       },
+        { label: 'Help Center',         href: '/help'       },
+        { label: 'Roadmap',             href: '/roadmap'    },
+        { label: 'Changelog',           href: '/changelog'  },
+        { label: 'API Docs',            href: '/api-docs'   },
       ],
     },
     {
       heading: 'Company',
       items: [
-        { label: 'About Us',           href: '/about'      },
-        { label: 'Careers',            href: '/careers'    },
-        { label: 'Press',              href: '/press'      },
-        { label: 'Contact',            href: '/contact'    },
+        { label: 'About Us',            href: '/about'      },
+        { label: 'Careers',             href: '/careers'    },
+        { label: 'Press',               href: '/press'      },
+        { label: 'Contact',             href: '/contact'    },
       ],
     },
   ],
   promo: {
-    bg:    'linear-gradient(135deg,#064e3b 0%,#065f46 60%,#10b981 100%)',
+    bg:    'linear-gradient(160deg,#064e3b 0%,#065f46 55%,#10b981 100%)',
     tag:   'WEEKLY NEWSLETTER',
     title: 'EntertainingHub\nInsider',
     body:  'Weekly picks, creator spotlights and platform updates straight to your inbox.',
@@ -129,24 +138,33 @@ type MenuData = typeof BROWSE_MENU;
 @customElement('app-header')
 export class AppHeader extends LitElement {
   static styles = css`
-    /* ── Host ─────────────────────────────────────────────── */
+    /* ── Font system — Lazzer with full fallback stack ─────── */
     :host {
+      --font-body: "Lazzer", ui-sans-serif, system-ui, -apple-system,
+        BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial,
+        "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+        "Segoe UI Symbol", "Noto Color Emoji";
+      -webkit-text-size-adjust: 100%;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+
       display: block;
       position: sticky;
       top: 0;
       z-index: 1000;
-      background: #fff;
-      border-bottom: 1px solid #e5e5e5;
+      background: #ffffff;
+      border-bottom: 1px solid #e2e2e2;
     }
 
-    /* ── Navbar ───────────────────────────────────────────── */
+    /* ── Navbar row ───────────────────────────────────────── */
     .navbar {
       display: flex;
       align-items: center;
       max-width: 1280px;
       margin: 0 auto;
-      padding: 0 24px;
-      height: 60px;
+      padding: 0 20px;
+      height: 56px;
+      font-family: var(--font-body);
     }
 
     /* ── Logo ─────────────────────────────────────────────── */
@@ -154,268 +172,302 @@ export class AppHeader extends LitElement {
       display: flex;
       flex-direction: column;
       text-decoration: none;
-      margin-right: 40px;
+      margin-right: 32px;
       flex-shrink: 0;
       line-height: 1;
+      gap: 2px;
     }
     .logo-name {
-      font-family: 'Poppins', sans-serif;
-      font-size: 1.1rem;
-      font-weight: 800;
-      color: #111;
-      letter-spacing: -0.3px;
+      font-family: var(--font-body);
+      font-size: 15px;
+      font-weight: 700;
+      color: #1a1a1a;
+      letter-spacing: -0.2px;
     }
-    .logo-domain {
-      font-size: 0.58rem;
-      color: #aaa;
+    .logo-sub {
+      font-size: 10px;
       font-weight: 400;
-      margin-top: 2px;
+      color: #999;
+      letter-spacing: 0;
     }
 
     /* ── Center nav ───────────────────────────────────────── */
     .nav-center {
       display: flex;
       align-items: stretch;
-      gap: 0;
       flex: 1;
       height: 100%;
     }
 
-    /* nav item — controls dropdown */
+    /* nav item wrapper */
     .nav-item {
       position: static;
       display: flex;
       align-items: center;
     }
 
-    /* trigger */
+    /* trigger button */
     .nav-trigger {
       display: inline-flex;
       align-items: center;
-      gap: 4px;
-      padding: 0 14px;
-      height: 60px;
-      font-size: 0.875rem;
+      gap: 3px;
+      padding: 0 12px;
+      height: 56px;
+      font-family: var(--font-body);
+      font-size: 14px;
       font-weight: 500;
-      color: #111;
+      color: #1a1a1a;
       background: none;
       border: none;
       border-bottom: 2px solid transparent;
       cursor: pointer;
       text-decoration: none;
       white-space: nowrap;
-      transition: color .15s, border-color .15s;
+      line-height: 1;
+      transition: border-color 0.15s ease;
     }
+    /* hover & open state — underline only, no bg */
     .nav-trigger:hover,
     .nav-item:hover > .nav-trigger {
-      color: #111;
-      border-bottom-color: #111;
+      border-bottom-color: #1a1a1a;
     }
 
-    /* active underline on the trigger when open */
-    .nav-item:hover > .nav-trigger {
-      border-bottom-color: #111;
-    }
-
-    /* chevron */
-    .nav-trigger svg {
-      width: 12px;
-      height: 12px;
-      color: #666;
-      transition: transform .2s;
+    /* chevron SVG */
+    .nav-trigger .chevron {
+      width: 11px;
+      height: 11px;
+      color: #555;
+      transition: transform 0.2s ease;
       flex-shrink: 0;
+      margin-top: 1px;
     }
-    .nav-item:hover > .nav-trigger svg {
+    .nav-item:hover > .nav-trigger .chevron {
       transform: rotate(180deg);
     }
 
-    /* plain link */
+    /* plain link (no dropdown) */
     .nav-plain {
       display: inline-flex;
       align-items: center;
-      padding: 0 14px;
-      height: 60px;
-      font-size: 0.875rem;
+      padding: 0 12px;
+      height: 56px;
+      font-family: var(--font-body);
+      font-size: 14px;
       font-weight: 500;
-      color: #111;
+      color: #1a1a1a;
       text-decoration: none;
       border-bottom: 2px solid transparent;
       white-space: nowrap;
-      transition: border-color .15s;
+      transition: border-color 0.15s ease;
     }
-    .nav-plain:hover { border-bottom-color: #111; }
+    .nav-plain:hover { border-bottom-color: #1a1a1a; }
 
-    /* ── MEGA DROPDOWN — full width, NO border-radius ─────── */
+    /* ── MEGA DROPDOWN ────────────────────────────────────── */
+    /* Full viewport width, NO border-radius, flat edges */
     .mega {
       display: none;
       position: fixed;
-      top: 60px;
+      top: 56px;
       left: 0;
       right: 0;
-      background: #fff;
-      border-top: 1px solid #e5e5e5;
-      border-bottom: 1px solid #e5e5e5;
-      box-shadow: 0 6px 20px rgba(0,0,0,.08);
+      background: #ffffff;
+      border-top: 1px solid #e2e2e2;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
       z-index: 999;
     }
     .nav-item:hover .mega { display: block; }
 
-    /* inner */
+    /* inner container — max-width centered */
     .mega-inner {
       max-width: 1280px;
       margin: 0 auto;
-      padding: 32px 24px 28px;
+      padding: 28px 20px 24px;
       display: flex;
+      align-items: flex-start;
       gap: 0;
+      font-family: var(--font-body);
     }
 
-    /* left: columns */
-    .mega-left {
+    /* ── Left: columns area ───────────────────────────────── */
+    .mega-cols {
       flex: 1;
       display: flex;
-      gap: 48px;
-      padding-right: 40px;
-      border-right: 1px solid #ebebeb;
+      gap: 40px;
+      padding-right: 36px;
+      border-right: 1px solid #e8e8e8;
     }
 
-    /* column */
-    .mega-col {}
+    /* single column */
+    .mega-col { min-width: 130px; }
+
+    /* column heading — bold, small, dark */
     .mega-col-heading {
-      font-size: 0.72rem;
-      font-weight: 700;
-      color: #111;
-      text-transform: uppercase;
-      letter-spacing: 0.6px;
-      margin-bottom: 14px;
       display: block;
+      font-family: var(--font-body);
+      font-size: 12px;
+      font-weight: 700;
+      color: #1a1a1a;
+      letter-spacing: 0;
+      margin-bottom: 12px;
+      line-height: 1.3;
     }
+
+    /* list */
     .mega-col-list {
       list-style: none;
       margin: 0;
       padding: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 0;
     }
+    .mega-col-list li { margin: 0; padding: 0; }
+
+    /* link — plain text, no bg, underline on hover */
     .mega-col-list li a {
       display: block;
-      padding: 5px 0;
-      font-size: 0.875rem;
-      color: #333;
+      padding: 4px 0;
+      font-family: var(--font-body);
+      font-size: 13.5px;
+      font-weight: 400;
+      color: #333333;
       text-decoration: none;
-      transition: color .12s;
+      line-height: 1.5;
       white-space: nowrap;
+      transition: color 0.12s ease;
     }
-    /* HOVER = underline, no background */
     .mega-col-list li a:hover {
-      color: #111;
+      color: #1a1a1a;
       text-decoration: underline;
+      text-underline-offset: 2px;
     }
 
-    /* right: promo card */
-    .mega-right {
-      width: 240px;
+    /* ── Right: promo card ────────────────────────────────── */
+    .mega-promo {
+      width: 230px;
       flex-shrink: 0;
-      padding-left: 40px;
+      padding-left: 36px;
       display: flex;
       flex-direction: column;
     }
+
     .promo-card {
-      border-radius: 12px;
-      padding: 22px 20px 20px;
+      border-radius: 10px;
+      padding: 20px 18px 18px;
       color: #fff;
       display: flex;
       flex-direction: column;
-      flex: 1;
+      min-height: 200px;
     }
+
     .promo-tag {
-      font-size: 0.62rem;
-      font-weight: 700;
-      letter-spacing: 0.8px;
-      color: rgba(255,255,255,.75);
-      margin-bottom: 10px;
       display: block;
+      font-family: var(--font-body);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.6px;
+      color: rgba(255, 255, 255, 0.75);
+      margin-bottom: 8px;
+      text-transform: uppercase;
     }
+
     .promo-title {
-      font-family: 'Poppins', sans-serif;
-      font-size: 1.25rem;
+      font-family: var(--font-body);
+      font-size: 18px;
       font-weight: 800;
-      line-height: 1.25;
-      margin-bottom: 10px;
+      line-height: 1.2;
+      color: #fff;
+      margin: 0 0 8px;
       white-space: pre-line;
     }
+
     .promo-body {
-      font-size: 0.78rem;
+      font-family: var(--font-body);
+      font-size: 12.5px;
       line-height: 1.55;
-      color: rgba(255,255,255,.85);
-      margin-bottom: 18px;
+      color: rgba(255, 255, 255, 0.85);
+      margin: 0 0 16px;
       flex: 1;
     }
+
     .promo-cta {
       display: inline-block;
-      background: #fff;
-      color: #111;
-      font-size: 0.78rem;
+      align-self: flex-start;
+      background: #ffffff;
+      color: #1a1a1a;
+      font-family: var(--font-body);
+      font-size: 12px;
       font-weight: 700;
-      padding: 8px 16px;
+      padding: 7px 14px;
       border-radius: 6px;
       text-decoration: none;
-      align-self: flex-start;
-      transition: opacity .15s;
+      transition: opacity 0.15s ease;
     }
-    .promo-cta:hover { opacity: .85; }
+    .promo-cta:hover { opacity: 0.88; }
 
-    /* ── Right side ───────────────────────────────────────── */
+    /* ── Right side — Log In / Sign Up ────────────────────── */
     .nav-right {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       margin-left: auto;
       flex-shrink: 0;
     }
 
-    /* Log In — outline pill */
+    /* Log In — outline pill (Semrush style) */
     .btn-login {
-      padding: 8px 22px;
-      font-size: 0.875rem;
-      font-weight: 600;
-      color: #111;
+      display: inline-flex;
+      align-items: center;
+      padding: 7px 20px;
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: 500;
+      color: #1a1a1a;
       background: transparent;
-      border: 1.5px solid #bbb;
+      border: 1.5px solid #c0c0c0;
       border-radius: 999px;
       cursor: pointer;
       text-decoration: none;
-      transition: border-color .15s, background .15s;
       white-space: nowrap;
+      line-height: 1;
+      transition: border-color 0.15s ease, background 0.15s ease;
     }
-    .btn-login:hover { border-color: #111; background: #f5f5f5; }
+    .btn-login:hover {
+      border-color: #1a1a1a;
+      background: #f5f5f5;
+    }
 
-    /* Sign Up — filled black pill */
+    /* Sign Up — filled black pill (Semrush style) */
     .btn-signup {
-      padding: 8px 22px;
-      font-size: 0.875rem;
+      display: inline-flex;
+      align-items: center;
+      padding: 7px 20px;
+      font-family: var(--font-body);
+      font-size: 14px;
       font-weight: 600;
-      color: #fff;
-      background: #111;
-      border: 1.5px solid #111;
+      color: #ffffff;
+      background: #1a1a1a;
+      border: 1.5px solid #1a1a1a;
       border-radius: 999px;
       cursor: pointer;
       text-decoration: none;
-      transition: background .15s;
       white-space: nowrap;
+      line-height: 1;
+      transition: background 0.15s ease, border-color 0.15s ease;
     }
-    .btn-signup:hover { background: #333; border-color: #333; }
+    .btn-signup:hover {
+      background: #333333;
+      border-color: #333333;
+    }
 
-    /* Avatar */
+    /* Avatar (logged in) */
     .avatar {
-      width: 34px;
-      height: 34px;
+      width: 32px;
+      height: 32px;
       border-radius: 50%;
       background: #6366f1;
       color: #fff;
+      font-family: var(--font-body);
       font-weight: 700;
-      font-size: 0.85rem;
-      display: flex;
+      font-size: 13px;
+      display: inline-flex;
       align-items: center;
       justify-content: center;
       text-decoration: none;
@@ -432,21 +484,24 @@ export class AppHeader extends LitElement {
   @consume({ context: authContext, subscribe: true })
   @state() private authState?: AuthState;
 
+  /* small chevron SVG — matches Semrush exactly */
   private chevron() {
-    return html`<svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-      <path fill-rule="evenodd"
-        d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
-        clip-rule="evenodd"/>
-    </svg>`;
+    return html`
+      <svg class="chevron" viewBox="0 0 12 12" fill="none"
+           xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M2 4L6 8L10 4" stroke="currentColor"
+              stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>`;
   }
 
+  /* render one full mega panel */
   private renderMega(menu: MenuData) {
     return html`
       <div class="mega">
         <div class="mega-inner">
 
-          <!-- Columns (no icons, plain text) -->
-          <div class="mega-left">
+          <!-- Columns -->
+          <div class="mega-cols">
             ${menu.cols.map(col => html`
               <div class="mega-col">
                 <span class="mega-col-heading">${col.heading}</span>
@@ -460,7 +515,7 @@ export class AppHeader extends LitElement {
           </div>
 
           <!-- Promo card -->
-          <div class="mega-right">
+          <div class="mega-promo">
             <div class="promo-card" style="background:${menu.promo.bg}">
               <span class="promo-tag">${menu.promo.tag}</span>
               <p class="promo-title">${menu.promo.title}</p>
@@ -484,40 +539,53 @@ export class AppHeader extends LitElement {
         <!-- Logo -->
         <a href="/" class="logo">
           <span class="logo-name">EntertainingHub</span>
-          <span class="logo-domain">entertainingzen.com</span>
+          <span class="logo-sub">entertainingzen.com</span>
         </a>
 
         <!-- Center nav -->
         <div class="nav-center">
 
+          <!-- Browse (mega) -->
           <div class="nav-item">
-            <button class="nav-trigger">Browse ${this.chevron()}</button>
+            <button class="nav-trigger">
+              Browse ${this.chevron()}
+            </button>
             ${this.renderMega(BROWSE_MENU)}
           </div>
 
+          <!-- Pricing (plain) -->
           <a href="/pricing" class="nav-plain">Pricing</a>
 
+          <!-- Creators (mega) -->
           <div class="nav-item">
-            <button class="nav-trigger">Creators ${this.chevron()}</button>
+            <button class="nav-trigger">
+              Creators ${this.chevron()}
+            </button>
             ${this.renderMega(CREATORS_MENU)}
           </div>
 
+          <!-- Resources (mega) -->
           <div class="nav-item">
-            <button class="nav-trigger">Resources ${this.chevron()}</button>
+            <button class="nav-trigger">
+              Resources ${this.chevron()}
+            </button>
             ${this.renderMega(RESOURCES_MENU)}
           </div>
 
+          <!-- Enterprise (plain) -->
           <a href="/enterprise" class="nav-plain">Enterprise</a>
 
         </div>
 
-        <!-- Right -->
+        <!-- Right: auth buttons -->
         <div class="nav-right">
           ${isAuth ? html`
             <a href="/profile" class="avatar" title="${user?.username}">
               ${user?.username?.charAt(0).toUpperCase() ?? 'U'}
             </a>
-            <button class="btn-login" @click=${() => authService.logout()}>Log Out</button>
+            <button class="btn-login" @click=${() => authService.logout()}>
+              Log Out
+            </button>
           ` : html`
             <a href="/login"    class="btn-login">Log In</a>
             <a href="/register" class="btn-signup">Sign Up</a>
