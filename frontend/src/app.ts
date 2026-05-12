@@ -16,18 +16,10 @@ export class App extends LitElement {
       color: var(--color-text);
     }
 
+    /* main has NO max-width or padding — each page/section controls its own layout */
     main {
       flex: 1;
       width: 100%;
-      max-width: var(--max-width);
-      margin: 0 auto;
-      padding: var(--spacing-lg);
-    }
-
-    @media (max-width: 768px) {
-      main {
-        padding: var(--spacing-md);
-      }
     }
   `;
 

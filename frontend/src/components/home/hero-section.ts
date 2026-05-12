@@ -1,10 +1,10 @@
 import { LitElement, html, css } from 'lit';
-import { customElement, state } from 'lit/decorators.js';
+import { customElement } from 'lit/decorators.js';
 
 /**
  * HeroSection — Pro-level video background hero
- * Uses a YouTube embed (muted, autoplay, loop) as background
- * YouTube video ID: dQw4w9WgXcQ is a placeholder — swap for a cinematic trailer
+ * Uses HTML5 <video> with a free Pexels/Pixabay CDN video
+ * No YouTube iframe — works in all browsers without autoplay restrictions
  */
 @customElement('hero-section')
 export class HeroSection extends LitElement {
@@ -16,62 +16,54 @@ export class HeroSection extends LitElement {
       position: relative;
       width: 100%;
       height: 100vh;
-      min-height: 600px;
-      max-height: 900px;
+      min-height: 620px;
+      max-height: 920px;
       overflow: hidden;
-      background: #0a0a0a;
+      background: #050505;
     }
 
-    /* ── Video background ─────────────────────────────────── */
-    .video-wrap {
+    /* ── HTML5 Video background ───────────────────────────── */
+    .bg-video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      z-index: 0;
+      opacity: 0;
+      transition: opacity 1.2s ease;
+    }
+    .bg-video.loaded { opacity: 1; }
+
+    /* Fallback gradient shown while video loads */
+    .bg-fallback {
       position: absolute;
       inset: 0;
       z-index: 0;
-      pointer-events: none;
-    }
-
-    /* YouTube iframe fills the container and stays centered */
-    .video-wrap iframe {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 177.78vh;   /* 16:9 aspect ratio based on height */
-      height: 100%;
-      min-width: 100%;
-      min-height: 56.25vw; /* 16:9 aspect ratio based on width */
-      transform: translate(-50%, -50%);
-      border: none;
-      pointer-events: none;
+      background:
+        radial-gradient(ellipse at 20% 50%, rgba(99,102,241,0.35) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 20%, rgba(236,72,153,0.25) 0%, transparent 55%),
+        radial-gradient(ellipse at 60% 80%, rgba(16,185,129,0.15) 0%, transparent 50%),
+        linear-gradient(135deg, #0a0a1a 0%, #0f0f2e 40%, #1a0a2e 70%, #0a0a1a 100%);
     }
 
     /* ── Gradient overlays ────────────────────────────────── */
-    /* Bottom fade — content readable */
-    .overlay-bottom {
+    .overlay {
       position: absolute;
       inset: 0;
       z-index: 1;
-      background: linear-gradient(
-        to top,
-        rgba(0,0,0,0.92) 0%,
-        rgba(0,0,0,0.55) 40%,
-        rgba(0,0,0,0.15) 70%,
-        transparent 100%
-      );
-    }
-
-    /* Top fade — subtle darkening at top */
-    .overlay-top {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 180px;
-      z-index: 1;
-      background: linear-gradient(
-        to bottom,
-        rgba(0,0,0,0.4) 0%,
-        transparent 100%
-      );
+      background:
+        linear-gradient(to top,
+          rgba(0,0,0,0.95) 0%,
+          rgba(0,0,0,0.65) 35%,
+          rgba(0,0,0,0.25) 65%,
+          rgba(0,0,0,0.1)  100%
+        ),
+        linear-gradient(to right,
+          rgba(0,0,0,0.5) 0%,
+          transparent 60%
+        );
     }
 
     /* ── Content ──────────────────────────────────────────── */
@@ -82,255 +74,311 @@ export class HeroSection extends LitElement {
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
-      padding: 0 0 72px;
+      padding-bottom: 80px;
       max-width: 1300px;
       margin: 0 auto;
       padding-left: 28px;
       padding-right: 28px;
     }
 
-    /* badge */
+    /* Live badge */
     .badge {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      background: rgba(99,102,241,0.9);
+      gap: 7px;
+      background: rgba(99,102,241,0.85);
       color: #fff;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 700;
-      letter-spacing: 1px;
+      letter-spacing: 1.2px;
       text-transform: uppercase;
       padding: 5px 14px;
       border-radius: 4px;
-      margin-bottom: 20px;
+      margin-bottom: 22px;
       width: fit-content;
-      backdrop-filter: blur(8px);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.15);
     }
 
-    /* heading */
+    .badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #4ade80;
+      animation: blink 1.5s ease-in-out infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.3; }
+    }
+
+    /* Heading */
     .title {
       font-family: var(--font-family-heading, 'Poppins', sans-serif);
-      font-size: clamp(2.5rem, 5.5vw, 4.5rem);
+      font-size: clamp(2.8rem, 6vw, 5rem);
       font-weight: 900;
       color: #ffffff;
-      line-height: 1.05;
-      letter-spacing: -0.03em;
-      margin: 0 0 16px;
-      max-width: 700px;
-      text-shadow: 0 2px 20px rgba(0,0,0,0.5);
+      line-height: 1.0;
+      letter-spacing: -0.04em;
+      margin: 0 0 20px;
+      max-width: 720px;
+      text-shadow: 0 4px 32px rgba(0,0,0,0.6);
     }
 
-    .title span {
-      background: linear-gradient(135deg, #818cf8, #c084fc);
+    .title-accent {
+      display: block;
+      background: linear-gradient(135deg, #818cf8 0%, #c084fc 50%, #f472b6 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
 
-    /* subtitle */
+    /* Subtitle */
     .subtitle {
-      font-size: clamp(1rem, 1.8vw, 1.2rem);
-      color: rgba(255,255,255,0.82);
-      max-width: 560px;
-      line-height: 1.65;
-      margin: 0 0 36px;
+      font-size: clamp(1rem, 1.6vw, 1.15rem);
+      color: rgba(255,255,255,0.75);
+      max-width: 520px;
+      line-height: 1.7;
+      margin: 0 0 38px;
       font-weight: 400;
     }
 
-    /* CTA row */
+    /* CTA buttons */
     .cta-row {
       display: flex;
       align-items: center;
       gap: 14px;
       flex-wrap: wrap;
+      margin-bottom: 36px;
     }
 
-    .btn-primary {
+    .btn-watch {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      padding: 14px 32px;
+      gap: 9px;
+      padding: 15px 34px;
       background: #ffffff;
       color: #0a0a0a;
       font-size: 15px;
       font-weight: 700;
       border-radius: 999px;
       text-decoration: none;
-      transition: background 0.15s, transform 0.15s;
-      letter-spacing: 0.01em;
+      transition: background 0.15s, transform 0.15s, box-shadow 0.15s;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
     }
-    .btn-primary:hover {
-      background: #e8e8e8;
-      transform: scale(1.03);
+    .btn-watch:hover {
+      background: #f0f0f0;
+      transform: scale(1.04);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
     }
 
-    .btn-outline {
+    .play-icon {
+      width: 18px;
+      height: 18px;
+      background: #0a0a0a;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .play-icon::after {
+      content: '';
+      display: block;
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 4px 0 4px 7px;
+      border-color: transparent transparent transparent #fff;
+      margin-left: 1px;
+    }
+
+    .btn-info {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      padding: 14px 32px;
+      padding: 15px 34px;
       background: rgba(255,255,255,0.12);
       color: #ffffff;
       font-size: 15px;
       font-weight: 600;
       border-radius: 999px;
-      border: 1.5px solid rgba(255,255,255,0.4);
+      border: 1.5px solid rgba(255,255,255,0.3);
       text-decoration: none;
-      backdrop-filter: blur(8px);
+      backdrop-filter: blur(12px);
       transition: background 0.15s, border-color 0.15s;
     }
-    .btn-outline:hover {
+    .btn-info:hover {
       background: rgba(255,255,255,0.22);
-      border-color: rgba(255,255,255,0.7);
+      border-color: rgba(255,255,255,0.6);
     }
 
-    /* meta row */
-    .meta-row {
+    /* Stats row */
+    .stats-row {
       display: flex;
       align-items: center;
-      gap: 20px;
-      margin-top: 28px;
+      gap: 0;
       flex-wrap: wrap;
     }
 
-    .meta-item {
+    .stat {
       display: flex;
-      align-items: center;
-      gap: 6px;
-      color: rgba(255,255,255,0.65);
-      font-size: 13px;
+      flex-direction: column;
+      padding-right: 28px;
+      margin-right: 28px;
+      border-right: 1px solid rgba(255,255,255,0.15);
+    }
+    .stat:last-child {
+      border-right: none;
+      margin-right: 0;
+      padding-right: 0;
+    }
+
+    .stat-value {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #ffffff;
+      line-height: 1;
+      letter-spacing: -0.02em;
+    }
+
+    .stat-label {
+      font-size: 11px;
+      color: rgba(255,255,255,0.5);
       font-weight: 500;
-    }
-
-    .meta-dot {
-      width: 4px;
-      height: 4px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.35);
-    }
-
-    /* rating badge */
-    .rating {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      background: rgba(245,158,11,0.2);
-      border: 1px solid rgba(245,158,11,0.4);
-      color: #fbbf24;
-      font-size: 12px;
-      font-weight: 700;
-      padding: 3px 10px;
-      border-radius: 4px;
+      margin-top: 3px;
+      letter-spacing: 0.3px;
     }
 
     /* ── Scroll indicator ─────────────────────────────────── */
     .scroll-hint {
       position: absolute;
-      bottom: 28px;
-      right: 28px;
+      bottom: 32px;
+      right: 32px;
       z-index: 2;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 6px;
-      color: rgba(255,255,255,0.4);
-      font-size: 11px;
-      letter-spacing: 1px;
+      gap: 8px;
+      color: rgba(255,255,255,0.35);
+      font-size: 10px;
+      letter-spacing: 1.5px;
       text-transform: uppercase;
     }
 
     .scroll-line {
       width: 1px;
-      height: 40px;
-      background: linear-gradient(to bottom, rgba(255,255,255,0.4), transparent);
-      animation: scrollPulse 2s ease-in-out infinite;
+      height: 48px;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.5), transparent);
+      animation: scrollAnim 2s ease-in-out infinite;
     }
 
-    @keyframes scrollPulse {
-      0%, 100% { opacity: 0.4; transform: scaleY(1); }
-      50%       { opacity: 1;   transform: scaleY(1.2); }
+    @keyframes scrollAnim {
+      0%   { transform: scaleY(0); transform-origin: top; opacity: 0; }
+      50%  { transform: scaleY(1); transform-origin: top; opacity: 1; }
+      100% { transform: scaleY(1); transform-origin: bottom; opacity: 0; }
     }
 
     /* ── Mobile ───────────────────────────────────────────── */
     @media (max-width: 768px) {
-      .hero { max-height: 700px; }
-      .content { padding-bottom: 48px; }
+      .hero { max-height: 750px; min-height: 560px; }
+      .content { padding-bottom: 52px; padding-left: 20px; padding-right: 20px; }
       .cta-row { gap: 10px; }
-      .btn-primary, .btn-outline { padding: 12px 24px; font-size: 14px; }
+      .btn-watch, .btn-info { padding: 13px 26px; font-size: 14px; }
+      .stat-value { font-size: 1.25rem; }
       .scroll-hint { display: none; }
     }
 
     @media (max-width: 480px) {
-      .hero { min-height: 500px; max-height: 600px; }
-      .meta-row { gap: 12px; }
+      .hero { min-height: 500px; max-height: 650px; }
+      .stats-row { gap: 16px; }
+      .stat { border-right: none; padding-right: 0; margin-right: 0; }
     }
   `;
-
-  /* YouTube video IDs — cinematic/trailer style */
-  private readonly VIDEO_ID = 'LXb3EKWsInQ'; /* Epic cinematic trailer */
-
-  @state() private videoLoaded = false;
-
-  private onVideoLoad() {
-    this.videoLoaded = true;
-  }
 
   render() {
     return html`
       <section class="hero">
 
-        <!-- ── Video background ── -->
-        <div class="video-wrap">
-          <iframe
-            src="https://www.youtube.com/embed/${this.VIDEO_ID}?autoplay=1&mute=1&loop=1&playlist=${this.VIDEO_ID}&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&disablekb=1&fs=0&playsinline=1"
-            title="Background video"
-            allow="autoplay; encrypted-media"
-            allowfullscreen
-            @load=${this.onVideoLoad}
-          ></iframe>
-        </div>
+        <!-- Fallback gradient (always visible, video fades over it) -->
+        <div class="bg-fallback"></div>
 
-        <!-- ── Gradient overlays ── -->
-        <div class="overlay-bottom"></div>
-        <div class="overlay-top"></div>
+        <!-- HTML5 video — free Pexels cinematic video, no autoplay restrictions -->
+        <video
+          class="bg-video"
+          autoplay
+          muted
+          loop
+          playsinline
+          preload="auto"
+          @canplay=${(e: Event) => (e.target as HTMLVideoElement).classList.add('loaded')}
+        >
+          <!-- Free cinematic video from Pexels CDN -->
+          <source
+            src="https://videos.pexels.com/video-files/3571264/3571264-uhd_2560_1440_30fps.mp4"
+            type="video/mp4"
+          />
+          <!-- Fallback source -->
+          <source
+            src="https://videos.pexels.com/video-files/2278095/2278095-hd_1920_1080_30fps.mp4"
+            type="video/mp4"
+          />
+        </video>
 
-        <!-- ── Hero content ── -->
+        <!-- Gradient overlay -->
+        <div class="overlay"></div>
+
+        <!-- Content -->
         <div class="content">
 
-          <span class="badge">✦ Now Streaming</span>
+          <div class="badge">
+            <span class="badge-dot"></span>
+            Now Streaming
+          </div>
 
           <h1 class="title">
-            Your Ultimate<br>
-            <span>Entertainment Hub</span>
+            Your Ultimate
+            <span class="title-accent">Entertainment Hub</span>
           </h1>
 
           <p class="subtitle">
-            Movies, Series, Anime, Gaming & Documentaries — all in one place,
-            curated by AI and loved by millions of fans worldwide.
+            Movies, Series, Anime, Gaming &amp; Documentaries —
+            all in one place, curated by AI and loved by millions worldwide.
           </p>
 
           <div class="cta-row">
-            <a href="/explore" class="btn-primary">
-              ▶ Start Watching
+            <a href="/explore" class="btn-watch">
+              <span class="play-icon"></span>
+              Start Watching
             </a>
-            <a href="/register" class="btn-outline">
+            <a href="/register" class="btn-info">
               Sign Up Free
             </a>
           </div>
 
-          <div class="meta-row">
-            <span class="rating">⭐ 4.8 / 5</span>
-            <span class="meta-dot"></span>
-            <span class="meta-item">10,000+ Titles</span>
-            <span class="meta-dot"></span>
-            <span class="meta-item">50K+ Users</span>
-            <span class="meta-dot"></span>
-            <span class="meta-item">200+ Creators</span>
+          <div class="stats-row">
+            <div class="stat">
+              <span class="stat-value">10K+</span>
+              <span class="stat-label">Titles</span>
+            </div>
+            <div class="stat">
+              <span class="stat-value">50K+</span>
+              <span class="stat-label">Users</span>
+            </div>
+            <div class="stat">
+              <span class="stat-value">200+</span>
+              <span class="stat-label">Creators</span>
+            </div>
+            <div class="stat">
+              <span class="stat-value">4.8★</span>
+              <span class="stat-label">Rating</span>
+            </div>
           </div>
 
         </div>
 
-        <!-- ── Scroll hint ── -->
+        <!-- Scroll hint -->
         <div class="scroll-hint">
           <div class="scroll-line"></div>
           <span>Scroll</span>
