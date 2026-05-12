@@ -4,8 +4,14 @@ import { consume } from '@lit/context';
 import { authContext, type AuthState } from '../../stores/auth-store';
 import { authService } from '../../services/auth-service';
 
+/* ── Types ─────────────────────────────────────────────────── */
+interface MenuItem  { label: string; href: string; }
+interface MenuCol   { heading: string; items: MenuItem[]; }
+interface MenuPromo { bg: string; imgText: string; tagline: string; body: string; }
+interface MenuData  { cols: MenuCol[]; promo: MenuPromo; }
+
 /* ── Menu data ─────────────────────────────────────────────── */
-const BROWSE_MENU = {
+const BROWSE_MENU: MenuData = {
   cols: [
     {
       heading: 'Start Here',
@@ -49,83 +55,53 @@ const BROWSE_MENU = {
     },
   ],
   promo: {
-    bg:       'linear-gradient(160deg,#7c3aed 0%,#a855f7 55%,#c084fc 100%)',
-    imgText:  'EntertainingHub\nPremium✦',
-    tagline:  'TRY PREMIUM FOR FREE',
-    body:     'The platform that unifies all entertainment with AI-powered recommendations.',
+    bg:      'linear-gradient(160deg,#7c3aed 0%,#a855f7 55%,#c084fc 100%)',
+    imgText: 'EntertainingHub\nPremium✦',
+    tagline: 'TRY PREMIUM FOR FREE',
+    body:    'The platform that unifies all entertainment with AI-powered recommendations.',
   },
 };
 
-const CREATORS_MENU = {
+const OTHERS_MENU: MenuData = {
   cols: [
     {
-      heading: 'Creator Tools',
+      heading: 'By Language',
       items: [
-        { label: 'Creator Dashboard',     href: '/creator'            },
-        { label: 'Upload Content',        href: '/creator/upload'     },
-        { label: 'Revenue Share',         href: '/creator/revenue'    },
-        { label: 'Analytics',             href: '/creator/analytics'  },
-        { label: 'Creator Blog',          href: '/blog'               },
+        { label: 'Japanese',        href: '/explore?lang=japanese'        },
+        { label: 'Korean',          href: '/explore?lang=korean'          },
+        { label: 'Chinese',         href: '/explore?lang=chinese'         },
+        { label: 'Spanish',         href: '/explore?lang=spanish'         },
+        { label: 'French',          href: '/explore?lang=french'          },
+        { label: 'Hindi',           href: '/explore?lang=hindi'           },
       ],
     },
     {
-      heading: 'Platform',
+      heading: 'Mature Content',
       items: [
-        { label: 'API Access',            href: '/api-docs'           },
-        { label: 'Integrations',          href: '/integrations'       },
-        { label: 'App Center',            href: '/apps'               },
-        { label: 'Data Sources',          href: '/data-sources'       },
+        { label: 'Adults (18+)',    href: '/category/18plus'              },
+        { label: 'Mature Anime',    href: '/explore?genre=mature-anime'   },
+        { label: 'Mature Series',   href: '/explore?genre=mature-series'  },
+        { label: 'Erotic Thriller', href: '/explore?genre=erotic-thriller'},
       ],
     },
     {
-      heading: 'Top Features',
+      heading: 'World Cinema',
       items: [
-        { label: 'Stripe Payouts',        href: '/creator/payouts'    },
-        { label: 'Advanced Stats',        href: '/creator/stats'      },
-        { label: 'Brand Deals',           href: '/creator/brands'     },
-        { label: 'Community',             href: '/community'          },
+        { label: 'K-Drama',         href: '/explore?genre=kdrama'         },
+        { label: 'J-Drama',         href: '/explore?genre=jdrama'         },
+        { label: 'Bollywood',       href: '/explore?genre=bollywood'      },
+        { label: 'European Films',  href: '/explore?genre=european'       },
+        { label: 'Latin Cinema',    href: '/explore?genre=latin'          },
       ],
     },
   ],
   promo: {
-    bg:       'linear-gradient(160deg,#0f172a 0%,#1e3a5f 55%,#0369a1 100%)',
-    imgText:  'EntertainingHub\nCreator Hub',
-    tagline:  'FOR CREATORS',
-    body:     '60/40 revenue split. Real-time analytics. Grow your audience.',
+    bg:      'linear-gradient(160deg,#1a1a2e 0%,#16213e 55%,#0f3460 100%)',
+    imgText: 'World\nContent',
+    tagline: 'GLOBAL ENTERTAINMENT',
+    body:    'Explore content from Japan, Korea, China, India and beyond.',
   },
 };
-
-const RESOURCES_MENU = {
-  cols: [
-    {
-      heading: 'Learn',
-      items: [
-        { label: 'Blog',                  href: '/blog'       },
-        { label: 'Help Center',           href: '/help'       },
-        { label: 'Roadmap',               href: '/roadmap'    },
-        { label: 'Changelog',             href: '/changelog'  },
-        { label: 'API Docs',              href: '/api-docs'   },
-      ],
-    },
-    {
-      heading: 'Company',
-      items: [
-        { label: 'About Us',              href: '/about'      },
-        { label: 'Careers',               href: '/careers'    },
-        { label: 'Press',                 href: '/press'      },
-        { label: 'Contact',               href: '/contact'    },
-      ],
-    },
-  ],
-  promo: {
-    bg:       'linear-gradient(160deg,#064e3b 0%,#065f46 55%,#10b981 100%)',
-    imgText:  'EntertainingHub\nInsider',
-    tagline:  'WEEKLY NEWSLETTER',
-    body:     'Weekly picks, creator spotlights and platform updates.',
-  },
-};
-
-type MenuData = typeof BROWSE_MENU;
 
 @customElement('app-header')
 export class AppHeader extends LitElement {
@@ -141,8 +117,8 @@ export class AppHeader extends LitElement {
       position: sticky;
       top: 0;
       z-index: 1000;
-      background: var(--nav-bg, #fff);
-      border-bottom: 1px solid var(--nav-border, #e2e2e2);
+      background: var(--nav-bg);
+      border-bottom: 1px solid var(--nav-border);
       transition: background 0.25s ease, border-color 0.25s ease;
     }
 
@@ -173,7 +149,7 @@ export class AppHeader extends LitElement {
     .logo-name {
       font-size: 18px;
       font-weight: 800;
-      color: var(--nav-text, #1a1a1a);
+      color: var(--nav-text);
       letter-spacing: -0.4px;
       font-family: var(--font);
       transition: color 0.25s;
@@ -181,7 +157,7 @@ export class AppHeader extends LitElement {
     .logo-sub {
       font-size: 10px;
       font-weight: 400;
-      color: var(--nav-text-muted, #888);
+      color: var(--nav-text-muted);
       font-family: var(--font);
       transition: color 0.25s;
     }
@@ -211,7 +187,7 @@ export class AppHeader extends LitElement {
       font-family: var(--font);
       font-size: 18px;
       font-weight: 500;
-      color: var(--nav-text, #1a1a1a);
+      color: var(--nav-text);
       background: none;
       border: none;
       cursor: pointer;
@@ -225,13 +201,13 @@ export class AppHeader extends LitElement {
       padding-bottom: 1px;
       transition: border-color 0.15s;
     }
-    .nav-trigger:hover .trigger-text { border-bottom-color: var(--nav-hover-border, #1a1a1a); }
-    .nav-item.open .trigger-text     { border-bottom-color: var(--nav-hover-border, #1a1a1a); }
+    .nav-trigger:hover .trigger-text { border-bottom-color: var(--nav-hover-border); }
+    .nav-item.open .trigger-text     { border-bottom-color: var(--nav-hover-border); }
 
     .chevron {
       width: 11px;
       height: 11px;
-      color: var(--nav-text-muted, #555);
+      color: var(--nav-text-muted);
       flex-shrink: 0;
       transition: transform 0.2s, color 0.25s;
     }
@@ -246,7 +222,7 @@ export class AppHeader extends LitElement {
       font-family: var(--font);
       font-size: 18px;
       font-weight: 500;
-      color: var(--nav-text, #1a1a1a);
+      color: var(--nav-text);
       text-decoration: none;
       white-space: nowrap;
       transition: color 0.25s;
@@ -256,18 +232,18 @@ export class AppHeader extends LitElement {
       padding-bottom: 1px;
       transition: border-color 0.15s;
     }
-    .nav-plain:hover span { border-bottom-color: var(--nav-hover-border, #1a1a1a); }
+    .nav-plain:hover span { border-bottom-color: var(--nav-hover-border); }
 
-    /* ── MEGA DROPDOWN ────────────────────────────────────── */
+    /* ── Mega dropdown ────────────────────────────────────── */
     .mega {
       display: none;
       position: fixed;
       top: 64px;
       left: 0;
       right: 0;
-      background: var(--nav-mega-bg, #fff);
-      border-top: 1px solid var(--nav-mega-border, #e2e2e2);
-      box-shadow: var(--nav-mega-shadow, 0 8px 24px rgba(0,0,0,.10));
+      background: var(--nav-mega-bg);
+      border-top: 1px solid var(--nav-mega-border);
+      box-shadow: var(--nav-mega-shadow);
       z-index: 999;
       transition: background 0.25s ease;
     }
@@ -289,7 +265,7 @@ export class AppHeader extends LitElement {
       grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
       gap: 0;
       padding-right: 40px;
-      border-right: 1px solid var(--nav-col-divider, #ebebeb);
+      border-right: 1px solid var(--nav-col-divider);
     }
 
     .mega-col { min-width: 130px; }
@@ -299,7 +275,7 @@ export class AppHeader extends LitElement {
       font-family: var(--font);
       font-size: 17px;
       font-weight: 700;
-      color: var(--nav-text, #1a1a1a);
+      color: var(--nav-text);
       margin-bottom: 14px;
       line-height: 1.3;
       transition: color 0.25s;
@@ -316,14 +292,14 @@ export class AppHeader extends LitElement {
       font-family: var(--font);
       font-size: 15px;
       font-weight: 400;
-      color: var(--nav-link-color, #333);
+      color: var(--nav-link-color);
       text-decoration: none;
       line-height: 1.5;
       white-space: nowrap;
       transition: color 0.1s;
     }
     .mega-col-list li a:hover {
-      color: var(--nav-link-hover, #1a1a1a);
+      color: var(--nav-link-hover);
       text-decoration: underline;
       text-underline-offset: 2px;
     }
@@ -361,7 +337,7 @@ export class AppHeader extends LitElement {
       font-family: var(--font);
       font-size: 13px;
       font-weight: 700;
-      color: var(--nav-promo-tag, #1a1a1a);
+      color: var(--nav-promo-tag);
       letter-spacing: 0.2px;
       margin-bottom: 6px;
       transition: color 0.25s;
@@ -370,7 +346,7 @@ export class AppHeader extends LitElement {
       font-family: var(--font);
       font-size: 15px;
       font-weight: 400;
-      color: var(--nav-promo-body, #444);
+      color: var(--nav-promo-body);
       line-height: 1.55;
       margin: 0;
       transition: color 0.25s;
@@ -402,7 +378,7 @@ export class AppHeader extends LitElement {
       width: 36px;
       height: 36px;
       border-radius: 999px;
-      border: 1.5px solid var(--btn-login-border, #b8b8b8);
+      border: 1.5px solid var(--btn-login-border);
       background: transparent;
       cursor: pointer;
       font-size: 16px;
@@ -411,8 +387,8 @@ export class AppHeader extends LitElement {
       flex-shrink: 0;
     }
     .btn-theme:hover {
-      border-color: var(--nav-hover-border, #1a1a1a);
-      background: var(--btn-login-hover-bg, #f5f5f5);
+      border-color: var(--nav-hover-border);
+      background: var(--btn-login-hover-bg);
     }
 
     /* Log In — outline pill */
@@ -424,9 +400,9 @@ export class AppHeader extends LitElement {
       font-family: var(--font);
       font-size: 14px;
       font-weight: 500;
-      color: var(--btn-login-color, #1a1a1a);
+      color: var(--btn-login-color);
       background: transparent;
-      border: 1.5px solid var(--btn-login-border, #b8b8b8);
+      border: 1.5px solid var(--btn-login-border);
       border-radius: 999px;
       cursor: pointer;
       text-decoration: none;
@@ -435,8 +411,8 @@ export class AppHeader extends LitElement {
       transition: border-color 0.15s, background 0.15s, color 0.25s;
     }
     .btn-login:hover {
-      border-color: var(--nav-hover-border, #1a1a1a);
-      background: var(--btn-login-hover-bg, #f5f5f5);
+      border-color: var(--nav-hover-border);
+      background: var(--btn-login-hover-bg);
     }
 
     /* Sign Up — filled pill */
@@ -448,9 +424,9 @@ export class AppHeader extends LitElement {
       font-family: var(--font);
       font-size: 14px;
       font-weight: 600;
-      color: var(--btn-signup-color, #fff);
-      background: var(--btn-signup-bg, #1a1a1a);
-      border: 1.5px solid var(--btn-signup-bg, #1a1a1a);
+      color: var(--btn-signup-color);
+      background: var(--btn-signup-bg);
+      border: 1.5px solid var(--btn-signup-bg);
       border-radius: 999px;
       cursor: pointer;
       text-decoration: none;
@@ -459,11 +435,11 @@ export class AppHeader extends LitElement {
       transition: background 0.15s, border-color 0.15s, color 0.25s;
     }
     .btn-signup:hover {
-      background: var(--btn-signup-hover, #333);
-      border-color: var(--btn-signup-hover, #333);
+      background: var(--btn-signup-hover);
+      border-color: var(--btn-signup-hover);
     }
 
-    /* Avatar */
+    /* Avatar — intentional hardcoded brand color */
     .avatar {
       width: 34px;
       height: 34px;
@@ -536,11 +512,11 @@ export class AppHeader extends LitElement {
 
           <!-- Columns -->
           <div class="mega-cols">
-            ${menu.cols.map(col => html`
+            ${menu.cols.map((col: MenuCol) => html`
               <div class="mega-col">
                 <span class="mega-col-heading">${col.heading}</span>
                 <ul class="mega-col-list">
-                  ${col.items.map(item => html`
+                  ${col.items.map((item: MenuItem) => html`
                     <li>
                       <a href="${item.href}" @click=${() => this.close()}>
                         ${item.label}
@@ -586,7 +562,7 @@ export class AppHeader extends LitElement {
         <!-- Center nav -->
         <div class="nav-center">
 
-          <!-- Browse -->
+          <!-- 1. Browse (mega menu) -->
           <div class="nav-item ${this.openMenu === 'browse' ? 'open' : ''}">
             <button class="nav-trigger"
                     @click=${() => this.toggle('browse')}
@@ -597,43 +573,36 @@ export class AppHeader extends LitElement {
             ${this.renderMega(BROWSE_MENU)}
           </div>
 
-          <!-- Pricing -->
+          <!-- 2. Pricing (plain link) -->
           <a href="/pricing" class="nav-plain" @click=${() => this.close()}>
             <span>Pricing</span>
           </a>
 
-          <!-- Creators -->
-          <div class="nav-item ${this.openMenu === 'creators' ? 'open' : ''}">
-            <button class="nav-trigger"
-                    @click=${() => this.toggle('creators')}
-                    aria-expanded="${this.openMenu === 'creators'}">
-              <span class="trigger-text">Creators</span>
-              ${this.chevronSvg()}
-            </button>
-            ${this.renderMega(CREATORS_MENU)}
-          </div>
-
-          <!-- Resources -->
-          <div class="nav-item ${this.openMenu === 'resources' ? 'open' : ''}">
-            <button class="nav-trigger"
-                    @click=${() => this.toggle('resources')}
-                    aria-expanded="${this.openMenu === 'resources'}">
-              <span class="trigger-text">Resources</span>
-              ${this.chevronSvg()}
-            </button>
-            ${this.renderMega(RESOURCES_MENU)}
-          </div>
-
-          <!-- Enterprise -->
-          <a href="/enterprise" class="nav-plain" @click=${() => this.close()}>
-            <span>Enterprise</span>
+          <!-- 3. Anime (plain link) -->
+          <a href="/category/anime" class="nav-plain" @click=${() => this.close()}>
+            <span>Anime</span>
           </a>
+
+          <!-- 4. Gaming (plain link) -->
+          <a href="/category/gaming" class="nav-plain" @click=${() => this.close()}>
+            <span>Gaming</span>
+          </a>
+
+          <!-- 5. Others (mega menu) -->
+          <div class="nav-item ${this.openMenu === 'others' ? 'open' : ''}">
+            <button class="nav-trigger"
+                    @click=${() => this.toggle('others')}
+                    aria-expanded="${this.openMenu === 'others'}">
+              <span class="trigger-text">Others</span>
+              ${this.chevronSvg()}
+            </button>
+            ${this.renderMega(OTHERS_MENU)}
+          </div>
 
         </div>
 
         <!-- Right: theme toggle + auth -->
         <div class="nav-right">
-          <!-- Theme toggle: shows 🌙 in light mode, ☀️ in dark mode -->
           <button class="btn-theme"
                   @click=${() => this.toggleTheme()}
                   title="${this.isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}"

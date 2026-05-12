@@ -1,10 +1,8 @@
 /* ============================================================
    Design Tokens — EntertainingHub Pro
-   Google recommended font sizes:
-   Desktop base: 16px | Body: 16-18px | Headings: 24-64px
-   Mobile base: 15px  | Body: 15-16px | Headings: 20-40px
    ============================================================ */
 
+/* ── Light mode (default) ─────────────────────────────────── */
 :root {
   /* Brand */
   --color-primary:       #6366f1;
@@ -15,18 +13,16 @@
   --color-secondary:       #ec4899;
   --color-secondary-dark:  #db2777;
   --color-secondary-light: #f472b6;
-  --color-secondary-bg:    #fdf2f8;
 
   --color-accent:       #10b981;
   --color-accent-dark:  #059669;
   --color-accent-light: #34d399;
 
-  /* Backgrounds */
+  /* Surfaces */
   --color-background:          #f8fafc;
   --color-background-elevated: #ffffff;
   --color-background-card:     #ffffff;
   --color-background-hover:    #f1f5f9;
-  --color-background-subtle:   #f8fafc;
 
   /* Text */
   --color-text:           #0f172a;
@@ -39,13 +35,30 @@
 
   /* Semantic */
   --color-success:    #10b981;
-  --color-success-bg: #ecfdf5;
   --color-warning:    #f59e0b;
-  --color-warning-bg: #fffbeb;
   --color-error:      #ef4444;
-  --color-error-bg:   #fef2f2;
   --color-info:       #3b82f6;
-  --color-info-bg:    #eff6ff;
+
+  /* Nav specific */
+  --nav-bg:           #ffffff;
+  --nav-border:       #e2e2e2;
+  --nav-text:         #1a1a1a;
+  --nav-text-muted:   #555555;
+  --nav-hover-border: #1a1a1a;
+  --nav-mega-bg:      #ffffff;
+  --nav-mega-border:  #e2e2e2;
+  --nav-mega-shadow:  0 8px 24px rgba(0,0,0,.10);
+  --nav-col-divider:  #ebebeb;
+  --nav-link-color:   #333333;
+  --nav-link-hover:   #1a1a1a;
+  --nav-promo-tag:    #1a1a1a;
+  --nav-promo-body:   #444444;
+  --btn-login-color:  #1a1a1a;
+  --btn-login-border: #b8b8b8;
+  --btn-login-hover-bg: #f5f5f5;
+  --btn-signup-bg:    #1a1a1a;
+  --btn-signup-color: #ffffff;
+  --btn-signup-hover: #333333;
 
   /* Spacing */
   --spacing-xs:  0.25rem;
@@ -56,27 +69,23 @@
   --spacing-2xl: 3rem;
   --spacing-3xl: 4rem;
 
-  /* ── Typography ─────────────────────────────────────────
-     Font stack: Lazzer → system UI fallbacks
-     Google minimum: 16px body, 12px minimum anywhere
-  ─────────────────────────────────────────────────────── */
+  /* Typography */
   --font-family-base:    "Lazzer", ui-sans-serif, system-ui, -apple-system,
     BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial,
     "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
     "Segoe UI Symbol", "Noto Color Emoji";
   --font-family-heading: "Lazzer", "Poppins", ui-sans-serif, system-ui, sans-serif;
 
-  /* Desktop font scale */
-  --font-size-xs:   0.8125rem;   /* 13px  — labels, badges */
-  --font-size-sm:   0.9375rem;   /* 15px  — secondary text */
-  --font-size-base: 1.0625rem;   /* 17px  — body text (Google recommends 16-18px) */
-  --font-size-lg:   1.1875rem;   /* 19px  — large body */
-  --font-size-xl:   1.375rem;    /* 22px  — small headings */
-  --font-size-2xl:  1.625rem;    /* 26px  — section subheadings */
-  --font-size-3xl:  2rem;        /* 32px  — section headings */
-  --font-size-4xl:  2.5rem;      /* 40px  — page headings */
-  --font-size-5xl:  3.25rem;     /* 52px  — hero headings */
-  --font-size-6xl:  4rem;        /* 64px  — display headings */
+  --font-size-xs:   0.8125rem;
+  --font-size-sm:   0.9375rem;
+  --font-size-base: 1.0625rem;
+  --font-size-lg:   1.1875rem;
+  --font-size-xl:   1.375rem;
+  --font-size-2xl:  1.625rem;
+  --font-size-3xl:  2rem;
+  --font-size-4xl:  2.5rem;
+  --font-size-5xl:  3.25rem;
+  --font-size-6xl:  4rem;
 
   --font-weight-light:     300;
   --font-weight-normal:    400;
@@ -87,7 +96,7 @@
 
   --line-height-tight:   1.2;
   --line-height-snug:    1.35;
-  --line-height-normal:  1.6;    /* Google recommends 1.5-1.8 for body */
+  --line-height-normal:  1.6;
   --line-height-relaxed: 1.75;
 
   /* Radius */
@@ -100,9 +109,9 @@
 
   /* Shadows */
   --shadow-sm:  0 1px 2px 0 rgba(0,0,0,.05);
-  --shadow-md:  0 4px 6px -1px rgba(0,0,0,.07), 0 2px 4px -2px rgba(0,0,0,.05);
-  --shadow-lg:  0 10px 15px -3px rgba(0,0,0,.08), 0 4px 6px -4px rgba(0,0,0,.05);
-  --shadow-xl:  0 20px 25px -5px rgba(0,0,0,.08), 0 8px 10px -6px rgba(0,0,0,.05);
+  --shadow-md:  0 4px 6px -1px rgba(0,0,0,.07);
+  --shadow-lg:  0 10px 15px -3px rgba(0,0,0,.08);
+  --shadow-xl:  0 20px 25px -5px rgba(0,0,0,.08);
   --shadow-2xl: 0 25px 50px -12px rgba(0,0,0,.15);
 
   /* Transitions */
@@ -116,8 +125,6 @@
   --z-fixed:          1030;
   --z-modal-backdrop: 1040;
   --z-modal:          1050;
-  --z-popover:        1060;
-  --z-tooltip:        1070;
 
   /* Layout */
   --max-width:         1300px;
@@ -125,4 +132,43 @@
   --max-width-text:    68ch;
   --header-height:     4rem;
   --grid-gap:          var(--spacing-lg);
+}
+
+/* ── Dark mode ────────────────────────────────────────────── */
+[data-theme="dark"] {
+  /* Surfaces */
+  --color-background:          #0f0f0f;
+  --color-background-elevated: #1a1a1a;
+  --color-background-card:     #1e1e1e;
+  --color-background-hover:    #2a2a2a;
+
+  /* Text */
+  --color-text:           #f1f5f9;
+  --color-text-secondary: #94a3b8;
+  --color-text-muted:     #64748b;
+
+  /* Borders */
+  --color-border:       #2e2e2e;
+  --color-border-light: #252525;
+
+  /* Nav specific — dark */
+  --nav-bg:           #111111;
+  --nav-border:       #2a2a2a;
+  --nav-text:         #f1f5f9;
+  --nav-text-muted:   #94a3b8;
+  --nav-hover-border: #f1f5f9;
+  --nav-mega-bg:      #161616;
+  --nav-mega-border:  #2a2a2a;
+  --nav-mega-shadow:  0 8px 32px rgba(0,0,0,.5);
+  --nav-col-divider:  #2a2a2a;
+  --nav-link-color:   #cbd5e1;
+  --nav-link-hover:   #f1f5f9;
+  --nav-promo-tag:    #f1f5f9;
+  --nav-promo-body:   #94a3b8;
+  --btn-login-color:  #f1f5f9;
+  --btn-login-border: #444444;
+  --btn-login-hover-bg: #2a2a2a;
+  --btn-signup-bg:    #f1f5f9;
+  --btn-signup-color: #111111;
+  --btn-signup-hover: #cbd5e1;
 }
