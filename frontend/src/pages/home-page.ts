@@ -3,96 +3,12 @@ import { customElement } from 'lit/decorators.js';
 import { Task } from '@lit/task';
 import { contentService } from '../services/content-service';
 import '../components/content/content-card';
+import '../components/home/hero-section';
 
 @customElement('home-page')
 export class HomePage extends LitElement {
   static styles = css`
     :host { display: block; }
-
-    /* ── Hero ─────────────────────────────────────────────── */
-    .hero {
-      background: linear-gradient(160deg, #f0f4ff 0%, #faf5ff 50%, #fff0f6 100%);
-      padding: 88px 24px 96px;
-      text-align: center;
-    }
-
-    .hero-eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 0.875rem;       /* 14px */
-      font-weight: 600;
-      color: #6366f1;
-      background: #eef2ff;
-      border: 1px solid #c7d2fe;
-      border-radius: 999px;
-      padding: 6px 16px;
-      margin-bottom: 24px;
-      letter-spacing: 0.2px;
-    }
-
-    .hero-title {
-      font-family: var(--font-family-heading, 'Poppins', sans-serif);
-      font-size: clamp(2.5rem, 6vw, 4rem);   /* 40-64px fluid */
-      font-weight: 800;
-      color: #0f172a;
-      line-height: 1.1;
-      margin-bottom: 24px;
-      max-width: 820px;
-      margin-left: auto;
-      margin-right: auto;
-      letter-spacing: -0.03em;
-    }
-
-    .hero-title span {
-      background: linear-gradient(135deg, #6366f1, #ec4899);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .hero-sub {
-      font-size: clamp(1.0625rem, 2vw, 1.25rem);  /* 17-20px fluid */
-      color: #475569;
-      max-width: 600px;
-      margin: 0 auto 40px;
-      line-height: 1.7;
-      font-weight: 400;
-    }
-
-    .hero-actions {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 14px;
-      flex-wrap: wrap;
-    }
-
-    .btn-hero-primary {
-      padding: 14px 32px;
-      background: #1a1a1a;
-      color: #fff;
-      font-size: 1rem;           /* 16px */
-      font-weight: 600;
-      border-radius: 999px;
-      text-decoration: none;
-      transition: background .15s;
-      letter-spacing: 0.01em;
-    }
-    .btn-hero-primary:hover { background: #333; }
-
-    .btn-hero-outline {
-      padding: 14px 32px;
-      background: transparent;
-      color: #1a1a1a;
-      font-size: 1rem;
-      font-weight: 600;
-      border-radius: 999px;
-      border: 1.5px solid #c8c8c8;
-      text-decoration: none;
-      transition: border-color .15s, background .15s;
-    }
-    .btn-hero-outline:hover { border-color: #1a1a1a; background: #f5f5f5; }
 
     /* ── Category pills ───────────────────────────────────── */
     .categories {
@@ -285,21 +201,7 @@ export class HomePage extends LitElement {
 
   render() {
     return html`
-      <section class="hero">
-        <div class="hero-eyebrow">✨ New — AI-Powered Recommendations</div>
-        <h1 class="hero-title">
-          Your Ultimate<br>
-          <span>Entertainment Hub</span>
-        </h1>
-        <p class="hero-sub">
-          Movies, Series, Anime, Gaming & Documentaries — all in one place,
-          curated by AI and loved by fans.
-        </p>
-        <div class="hero-actions">
-          <a href="/explore"  class="btn-hero-primary">Start Exploring</a>
-          <a href="/register" class="btn-hero-outline">Sign Up Free</a>
-        </div>
-      </section>
+      <hero-section></hero-section>
 
       <div class="categories">
         ${[
